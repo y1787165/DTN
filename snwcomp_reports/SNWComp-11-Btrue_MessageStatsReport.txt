@@ -1,0 +1,20 @@
+Message stats for scenario SNWComp-11-Btrue
+sim_time: 43200.1000
+created: 1461
+started: 33660
+relayed: 13297
+aborted: 20361
+dropped: 13144
+removed: 0
+delivered: 686
+delivery_prob: 0.4695
+response_prob: 0.0000
+overhead_ratio: 18.3834
+latency_avg: 3047.1641
+latency_med: 2357.5000
+hopcount_avg: 2.9490
+hopcount_med: 3
+buffertime_avg: 2563.8346
+buffertime_med: 1945.3000
+rtt_avg: NaN
+rtt_med: NaN
