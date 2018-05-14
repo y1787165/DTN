@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//import com.sun.xml.internal.bind.marshaller.Messages;
+
 import routing.util.RoutingInfo;
 
 import util.Tuple;
@@ -31,6 +33,8 @@ public class mRouter extends ActiveRouter {
 	private Map<DTNHost, Map<DTNHost, Integer>> routingTable;
 	private Map<DTNHost, Integer> contactTable;
 	
+	String community_id = "";
+	
 	/**
 	 * Constructor. Creates a new message router based on the settings in
 	 * the given Settings object.
@@ -40,6 +44,7 @@ public class mRouter extends ActiveRouter {
 		super(s);
 		contactTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
+		System.out.println("ZZZ");
 	}
 
 	/**
@@ -52,10 +57,29 @@ public class mRouter extends ActiveRouter {
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 	}
 	
+	
+	public void testMessageInformation() {
+		
+		ArrayList<Message> messages = new ArrayList<Message>();
+		messages.addAll(getMessageCollection());
+		
+		for( Message m : messages ) {
+			ArrayList<DTNHost> hosts = new ArrayList<DTNHost>();
+			hosts.addAll(m.getHops());
+			
+			for( DTNHost host : hosts ) {
+				System.out.println( host.toString());
+			}
+			System.out.println("-");
+		}
+		
+	}
+	
 	@Override
 	public void changedConnection(Connection con) {
 		super.changedConnection(con);
-		
+
+		testMessageInformation();
 		if (con.isUp()) {
 			DTNHost otherHost = con.getOtherNode(getHost());
 			updateRoutingInfo(otherHost);
@@ -131,5 +155,7 @@ public class mRouter extends ActiveRouter {
 		return r;
 	}
 
+	
+	
 
 }

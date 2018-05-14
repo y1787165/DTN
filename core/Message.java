@@ -14,6 +14,10 @@ import java.util.Set;
  * A message that is created at a node or passed between nodes.
  */
 public class Message implements Comparable<Message> {
+	
+	/** Custom information , added in 2018/05/14  */
+	private List<String> covered_community;
+	
 	/** Value for infinite TTL of message */
 	public static final int INFINITE_TTL = -1;
 	private DTNHost from;
@@ -78,8 +82,19 @@ public class Message implements Comparable<Message> {
 		this.properties = null;
 		this.appID = null;
 		
+		/** Customed action */
+		this.covered_community = new ArrayList<String>();
+		
 		Message.nextUniqueId++;
 		addNodeOnPath(from);
+	}
+	
+	public List<String> getCoveredList() {
+		return this.covered_community;
+	}
+	
+	public void addCommunityToCoveredList(String community_id) {
+		covered_community.add(community_id);
 	}
 	
 	/**
