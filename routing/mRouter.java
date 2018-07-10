@@ -31,7 +31,10 @@ import core.SimClock;
 public class mRouter extends ActiveRouter {
 
 	private Map<DTNHost, Map<DTNHost, Integer>> routingTable;
-	private Map<DTNHost, Integer> contactTable;
+	private Map<DTNHost, Integer> contactNumberTable;
+	private Map<DTNHost, Double> contactTimeTable;
+	private Map<DTNHost, Double> upTimeTable;
+
 	
 	String community_id = "";
 	
@@ -42,9 +45,8 @@ public class mRouter extends ActiveRouter {
 	 */
 	public mRouter(Settings s) {
 		super(s);
-		contactTable = new HashMap<DTNHost, Integer>();
-		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
-		System.out.println("ZZZ");
+		init();
+		System.out.println("Use s constructor");
 	}
 
 	/**
@@ -53,16 +55,34 @@ public class mRouter extends ActiveRouter {
 	 */
 	protected mRouter(mRouter r) {
 		super(r);
-		contactTable = new HashMap<DTNHost, Integer>();
+		init();
+		System.out.println("User r counstructor");
+	}
+
+	private void init(){
+		contactNumberTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
+		contactTimeTable = new HashMap<DTNHost, Double>();
+		upTimeTable = new HashMap<DTNHost, Double>();
 	}
 	
+	private void updateHistoryRoutingInformation() {
+		
+		for (Connection con : getConnections()) {
+			DTNHost other = con.getOtherNode(getHost());
+			mRouter othRouter = (mRouter)other.getRouter();
+		}
+		
+	}
 	
 	public void testMessageInformation() {
 		
 		ArrayList<Message> messages = new ArrayList<Message>();
 		messages.addAll(getMessageCollection());
-		
+
+		// Test the hop node of a message, but the same node repeatly appear.
+
+		/*
 		for( Message m : messages ) {
 			ArrayList<DTNHost> hosts = new ArrayList<DTNHost>();
 			hosts.addAll(m.getHops());
@@ -72,28 +92,64 @@ public class mRouter extends ActiveRouter {
 			}
 			System.out.println("-");
 		}
-		
+		*/
 	}
 	
 	@Override
 	public void changedConnection(Connection con) {
 		super.changedConnection(con);
 
+		DTNHost other = con.getOtherNode(this.getHost());
+		DTNHost self = this.getHost();
+
 		testMessageInformation();
 		if (con.isUp()) {
 			DTNHost otherHost = con.getOtherNode(getHost());
-			updateRoutingInfo(otherHost);
-			updateContactNumbers(otherHost);
+			/*
+			System.out.println( "Connection up at:"+SimClock.getTime() );
+			System.out.println( "from node " + self.toString());
+			System.out.println( "to node " + other.toString());*/
+
+			// Record the start time
+			upTimeTable.put( other , SimClock.getTime() );
+
+			// Update the contact number when a contact occurs.
+			updateContactNumbers(other);
+
+		}
+		else {
+			Double downTime = SimClock.getTime();
+			Double upTime = upTimeTable.get(other);
+			/*
+			System.out.println( "Connection down at:"+downTime );
+			System.out.println( "from node " + self.toString());
+			System.out.println( "to node " + other.toString());
+			System.out.println( "Total time in this contact " + (downTime-upTime));*/
+
+			// Update the time when a contact is down.
+			updateContactTime( other , (downTime-upTime) );
 		}
 	}
-	
+
 	private void updateContactNumbers(DTNHost otherHost) {
-		if( contactTable.containsKey(otherHost) )
-			contactTable.put( otherHost, contactTable.get(otherHost)+1 );
+
+		if( contactNumberTable.containsKey(otherHost) )
+			contactNumberTable.put( otherHost, contactNumberTable.get(otherHost)+1 );
 		else
-			contactTable.put( otherHost, 1 );
-		
-		System.out.println(contactTable.get(otherHost).toString());
+			contactNumberTable.put( otherHost, 1 );
+
+		// Print contact number message to check whether it can work, it works now.
+		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
+	}
+
+	private void updateContactTime(DTNHost otherHost, double time){
+		if( contactTimeTable.containsKey(otherHost) )
+			contactTimeTable.put( otherHost, contactTimeTable.get(otherHost)+time );
+		else
+			contactTimeTable.put( otherHost, time );
+
+		// Print accumalated time message to check whether it can work, it works now.
+		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
 	}
 	
 	private void updateRoutingInfo(DTNHost otherHost) {
@@ -107,7 +163,7 @@ public class mRouter extends ActiveRouter {
 	}
 	
 	private Map<DTNHost, Integer> getContactTable() {
-		return this.contactTable;
+		return this.contactNumberTable;
 	}
 	
 	@Override

@@ -6,11 +6,7 @@ package routing.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import core.DTNHost;
 
 public class CommunityList {
 	

@@ -8,6 +8,12 @@ import gui.DTNSimGUI;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import core.DTNHost;
+import routing.util.CommunityList;
 
 import ui.DTNSimTextUI;
 
@@ -45,6 +51,9 @@ public class DTNSim {
 		String confFiles[];
 		int firstConfIndex = 0;
 		int guiIndex = 0;
+		
+		/** Custom action to initialize the global parameters */
+		CommunityList.list = new HashMap<DTNHost,String>();
 
 		/* set US locale to parse decimals in consistent way */
 		java.util.Locale.setDefault(java.util.Locale.US);
