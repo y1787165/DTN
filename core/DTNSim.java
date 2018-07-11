@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import core.DTNHost;
 import routing.util.CommunityList;
+import routing.util.AllContactTime;
 
 import ui.DTNSimTextUI;
 
@@ -32,7 +34,20 @@ public class DTNSim {
 	public static final String RESET_METHOD_NAME = "reset";
 	/** List of class names that should be reset between batch runs */
 	private static List<Class<?>> resetList = new ArrayList<Class<?>>();
-	
+
+
+	public static void printAllContactMessages(){
+		for( Entry<DTNHost, Map<DTNHost, Double>> entrys: AllContactTime.allContactList.entrySet()) {
+
+			System.out.println(entrys.getKey().toString()+":");
+
+			for( Entry<DTNHost, Double> entry : entrys.getValue().entrySet() ) {
+				System.out.printf(entry.getKey().toString()+" "+entry.getValue()+" ");
+			}
+			System.out.println("");
+		}
+	}
+
 	/**
 	 * Starts the user interface with given arguments.
 	 * If first argument is {@link #BATCH_MODE_FLAG}, the batch mode and text UI
@@ -54,6 +69,38 @@ public class DTNSim {
 		
 		/** Custom action to initialize the global parameters */
 		CommunityList.list = new HashMap<DTNHost,String>();
+		AllContactTime.allContactList = new HashMap<DTNHost,Map<DTNHost,Double>>();
+		AllContactTime.allContactNumberList = new HashMap<DTNHost,Map<DTNHost,Integer>>();
+
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+
+				boolean cluster = false;
+
+				while(true) {
+					System.out.print("T");
+					try {
+						if( SimClock.getTime() > 4000 ) {
+							if( cluster == false ){
+
+								printAllContactMessages();
+								cluster = true;
+							}
+							else {
+								break;
+							}
+						}
+
+						// thread to sleep for 1000 milliseconds
+						Thread.sleep(1000);
+					} catch (Exception e) {
+						System.out.println(e);
+					}
+				}
+			}
+		});
+		thread.setDaemon(true);
+		thread.start();
 
 		/* set US locale to parse decimals in consistent way */
 		java.util.Locale.setDefault(java.util.Locale.US);
@@ -231,5 +278,10 @@ public class DTNSim {
 	 */
 	private static void print(String txt) {
 		System.out.println(txt);
+	}
+
+	public void KClique () {
+
+
 	}
 }

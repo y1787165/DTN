@@ -15,6 +15,7 @@ import java.util.Map;
 //import com.sun.xml.internal.bind.marshaller.Messages;
 
 import routing.util.RoutingInfo;
+import routing.util.AllContactTime;
 
 import util.Tuple;
 
@@ -60,6 +61,7 @@ public class mRouter extends ActiveRouter {
 	}
 
 	private void init(){
+
 		contactNumberTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 		contactTimeTable = new HashMap<DTNHost, Double>();
@@ -104,7 +106,6 @@ public class mRouter extends ActiveRouter {
 
 		testMessageInformation();
 		if (con.isUp()) {
-			DTNHost otherHost = con.getOtherNode(getHost());
 			/*
 			System.out.println( "Connection up at:"+SimClock.getTime() );
 			System.out.println( "from node " + self.toString());
@@ -115,7 +116,10 @@ public class mRouter extends ActiveRouter {
 
 			// Update the contact number when a contact occurs.
 			updateContactNumbers(other);
+			updateGlobalContactNumbers(self);
 
+			// Check the list of neighbors of the new connected node
+			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
 		}
 		else {
 			Double downTime = SimClock.getTime();
@@ -128,6 +132,7 @@ public class mRouter extends ActiveRouter {
 
 			// Update the time when a contact is down.
 			updateContactTime( other , (downTime-upTime) );
+			updateGlobalContactTime( self );
 		}
 	}
 
@@ -150,6 +155,33 @@ public class mRouter extends ActiveRouter {
 
 		// Print accumalated time message to check whether it can work, it works now.
 		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
+	}
+
+	private void updateGlobalContactNumbers(DTNHost self) {
+
+		AllContactTime.allContactNumberList.put( self,contactNumberTable  );
+
+		// Print contact number message to check whether it can work, it works now.
+		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
+	}
+
+	private void updateGlobalContactTime(DTNHost self){
+
+		AllContactTime.allContactList.put( self, contactTimeTable );
+
+		// Print accumalated time message to check whether it can work, it works now.
+		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
+	}
+
+	private List<Connection> getOtherNodeCurrentConnectionList( DTNHost other ){
+		/* Print the connect message
+		System.out.println("The node currently connects to " );
+		for ( Connection other_con : other.getConnections() ) {
+			System.out.printf( other_con.getOtherNode(other).toString() );
+		}
+		System.out.println("");*/
+
+		return other.getConnections();
 	}
 	
 	private void updateRoutingInfo(DTNHost otherHost) {

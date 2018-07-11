@@ -7,7 +7,7 @@ Scenario.name = Test-5-nodes
 Scenario.simulateConnections = true
 Scenario.updateInterval = 1.0
 # 43200s == 12h
-Scenario.endTime = 5000
+Scenario.endTime = 50000
 Scenario.nrofHostGroups = 1
 
 
@@ -54,7 +54,7 @@ Group.interface1 = btInterface
 Group.speed = 0.5, 1.5
 # Message TTL of 300 minutes (5 hours)
 Group.msgTtl = 300
-Group.nrofHosts = 5
+Group.nrofHosts = 30
 Group.groupID = n
 
 
