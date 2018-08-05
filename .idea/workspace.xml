@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/routing/mRouter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.java" afterDir="false" />
-    </list>
+    <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -284,16 +282,15 @@
       <updated>1531144230999</updated>
       <workItem from="1531144232239" duration="200000" />
       <workItem from="1531730863019" duration="7546000" />
-      <workItem from="1533110637471" duration="13505000" />
+      <workItem from="1533110637471" duration="14204000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21251000" />
+    <option name="totallyTimeSpent" value="21950000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
