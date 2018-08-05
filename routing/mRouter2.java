@@ -248,9 +248,7 @@ public class mRouter2 extends ActiveRouter {
 		return activeNodes;
 	}
 
-	// TODO: 2018/8/5 to judge if the
 	public boolean otherRouterCanCoverMoreNodes( Message m ){
-
 		// Get active nodes of the other connected node
 		MessageRouter otherRouter = this.host.getRouter();
 		List<String> activeNodes = ((mRouter2)otherRouter).getActiveNodes();
@@ -261,6 +259,16 @@ public class mRouter2 extends ActiveRouter {
 
 		// If both list contains all other elements , then the two lists are equaled
 		return !(activeNodes.containsAll(tmpActiveNodes) && tmpActiveNodes.containsAll(activeNodes));
+	}
+
+	private void updateMessageCovered( Message m ){
+		// Merge two covered lists
+		List<String> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m);
+		List<String> activeNodes = this.getActiveNodes();
+		activeNodes.addAll(tmpActiveNodes);
+
+		// Reput the list to covered list
+		MessageCover.MessageCoverInfo.put(m.toString(),activeNodes);
 	}
 	// Above is mRouter
 
@@ -445,7 +453,12 @@ public class mRouter2 extends ActiveRouter {
 				 }
 				 else if (  )
 				 */
-				if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
+
+				if( otherRouterCanCoverMoreNodes(m) ) {
+					messages.add(new Tuple<Message, Connection>(m,con));
+					updateMessageCovered(m);
+				}
+				else if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
 					// the other node has higher probability of delivery
 					messages.add(new Tuple<Message, Connection>(m,con));
 				}

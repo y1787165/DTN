@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/DTNSim$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/DTNSim.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/DTNSim.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example_settings/m_settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example_settings/m_settings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/Test-5-nodes/HAHAHA_MessageStatsReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/Test-5-nodes/HAHAHA_MessageStatsReport.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/mRouter.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/mRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing/mRouter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,14 +42,25 @@
       <file leaf-file-name="mRouter2.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="261" column="84" selection-start-line="261" selection-start-column="84" selection-end-line="261" selection-end-column="84" />
+            <state relative-caret-position="2167">
+              <caret line="525" column="19" lean-forward="true" selection-start-line="525" selection-start-column="19" selection-end-line="525" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5950#5951#0" expanded="true" />
                 <element signature="e#5987#5988#0" expanded="true" />
-                <element signature="e#6969#6970#0" expanded="true" />
-                <element signature="e#7019#7020#0" expanded="true" />
+                <element signature="e#7542#7586#0" />
+                <element signature="e#7023#8034#0" />
+                <element signature="e#8038#8193#0" />
+                <element signature="e#8038#8371#0" />
+                <element signature="e#8375#8560#0" />
+                <element signature="e#8375#8763#0" />
+                <element signature="e#8767#8959#0" />
+                <element signature="e#8767#9617#0" />
+                <element signature="e#9620#9853#0" />
+                <element signature="e#9620#10207#0" />
+                <element signature="e#10211#10331#0" />
+                <element signature="e#10211#10459#0" />
+                <element signature="e#10463#10786#0" />
               </folding>
             </state>
           </provider>
@@ -280,12 +284,12 @@
       <updated>1531144230999</updated>
       <workItem from="1531144232239" duration="200000" />
       <workItem from="1531730863019" duration="7546000" />
-      <workItem from="1533110637471" duration="11319000" />
+      <workItem from="1533110637471" duration="13505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19065000" />
+    <option name="totallyTimeSpent" value="21251000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
@@ -326,6 +330,20 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
+          <line>338</line>
+          <properties class="routing.mRouter2" method="getPredFor">
+            <option name="EMULATED" value="true" />
+          </properties>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
@@ -465,14 +483,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="261" column="84" selection-start-line="261" selection-start-column="84" selection-end-line="261" selection-end-column="84" />
+        <state relative-caret-position="2167">
+          <caret line="525" column="19" lean-forward="true" selection-start-line="525" selection-start-column="19" selection-end-line="525" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5950#5951#0" expanded="true" />
             <element signature="e#5987#5988#0" expanded="true" />
-            <element signature="e#6969#6970#0" expanded="true" />
-            <element signature="e#7019#7020#0" expanded="true" />
+            <element signature="e#7542#7586#0" />
+            <element signature="e#7023#8034#0" />
+            <element signature="e#8038#8193#0" />
+            <element signature="e#8038#8371#0" />
+            <element signature="e#8375#8560#0" />
+            <element signature="e#8375#8763#0" />
+            <element signature="e#8767#8959#0" />
+            <element signature="e#8767#9617#0" />
+            <element signature="e#9620#9853#0" />
+            <element signature="e#9620#10207#0" />
+            <element signature="e#10211#10331#0" />
+            <element signature="e#10211#10459#0" />
+            <element signature="e#10463#10786#0" />
           </folding>
         </state>
       </provider>
