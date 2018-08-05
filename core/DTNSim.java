@@ -37,10 +37,17 @@ public class DTNSim {
 
 
 	public static void printAllContactMessages(){
+
+		/**
+		 * 1. Extract the all contact list into many single lists.
+		 * 2. Extract every single list to get the contact numbers.
+		 */
 		for( Entry<DTNHost, Map<DTNHost, Double>> entrys: AllContactTime.allContactList.entrySet()) {
 
+			// Entrys contains the contact information of a certain node to other all nodes.
 			System.out.println(entrys.getKey().toString()+":");
 
+			// An entry contains the contact information of a certain node to another certains node.
 			for( Entry<DTNHost, Double> entry : entrys.getValue().entrySet() ) {
 				System.out.printf(entry.getKey().toString()+" "+entry.getValue()+" ");
 			}
@@ -71,6 +78,7 @@ public class DTNSim {
 		CommunityList.list = new HashMap<DTNHost,String>();
 		AllContactTime.allContactList = new HashMap<DTNHost,Map<DTNHost,Double>>();
 		AllContactTime.allContactNumberList = new HashMap<DTNHost,Map<DTNHost,Integer>>();
+		MessageCover.MessageCoverInfo = new HashMap<String,List<String>>();
 
 		Thread thread = new Thread(new Runnable() {
 			public void run() {

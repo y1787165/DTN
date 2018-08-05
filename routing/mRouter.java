@@ -31,11 +31,13 @@ import core.SimClock;
  */
 public class mRouter extends ActiveRouter {
 
+	private static final int O_SIZE = 86400;
+
 	private Map<DTNHost, Map<DTNHost, Integer>> routingTable;
 	private Map<DTNHost, Integer> contactNumberTable;
 	private Map<DTNHost, Double> contactTimeTable;
 	private Map<DTNHost, Double> upTimeTable;
-
+	int[] contactIdicator;
 	
 	String community_id = "";
 	
@@ -66,6 +68,12 @@ public class mRouter extends ActiveRouter {
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 		contactTimeTable = new HashMap<DTNHost, Double>();
 		upTimeTable = new HashMap<DTNHost, Double>();
+
+		contactIdicator = new int[86400];
+
+		for ( int i=0 ; i<O_SIZE ; ++i ) {
+			contactIdicator[i] = 0;
+		}
 	}
 	
 	private void updateHistoryRoutingInformation() {
@@ -104,6 +112,13 @@ public class mRouter extends ActiveRouter {
 		DTNHost other = con.getOtherNode(this.getHost());
 		DTNHost self = this.getHost();
 
+		/**
+		 * Get current time.
+		 * If con.isUp , the time is start time.
+		 * Else , the time is down time.
+		 */
+		double time = SimClock.getTime();
+
 		testMessageInformation();
 		if (con.isUp()) {
 			/*
@@ -112,7 +127,7 @@ public class mRouter extends ActiveRouter {
 			System.out.println( "to node " + other.toString());*/
 
 			// Record the start time
-			upTimeTable.put( other , SimClock.getTime() );
+			upTimeTable.put( other , time );
 
 			// Update the contact number when a contact occurs.
 			updateContactNumbers(other);
@@ -122,7 +137,7 @@ public class mRouter extends ActiveRouter {
 			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
 		}
 		else {
-			Double downTime = SimClock.getTime();
+			Double downTime = time;
 			Double upTime = upTimeTable.get(other);
 			/*
 			System.out.println( "Connection down at:"+downTime );
@@ -133,6 +148,14 @@ public class mRouter extends ActiveRouter {
 			// Update the time when a contact is down.
 			updateContactTime( other , (downTime-upTime) );
 			updateGlobalContactTime( self );
+
+			// Indicator is 0 or 1, 1 means the contact is happened at time i.
+			if ( downTime >= 86400 ) {
+				downTime = 86399.0;
+			}
+			for ( int i= upTime.intValue() ; i<downTime ; ++i ){
+				contactIdicator[i] = 1;
+			}
 		}
 	}
 
@@ -148,6 +171,7 @@ public class mRouter extends ActiveRouter {
 	}
 
 	private void updateContactTime(DTNHost otherHost, double time){
+
 		if( contactTimeTable.containsKey(otherHost) )
 			contactTimeTable.put( otherHost, contactTimeTable.get(otherHost)+time );
 		else

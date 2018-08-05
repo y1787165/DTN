@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/DTNSim$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/DTNSim.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/DTNSim.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example_settings/m_settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example_settings/m_settings.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reports/Test-5-nodes/HAHAHA_MessageStatsReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/Test-5-nodes/HAHAHA_MessageStatsReport.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/default_scenario_ConnectivityONEReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/default_scenario_ConnectivityONEReport.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/default_scenario_ContactTimesReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/default_scenario_ContactTimesReport.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/util/CommunityList.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/util/CommunityList.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,12 +19,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ActiveRouter.java" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="ActiveRouter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="41" column="62" lean-forward="true" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
+            <state relative-caret-position="6116">
+              <caret line="300" column="5" selection-start-line="300" selection-start-column="5" selection-end-line="300" selection-end-column="5" />
               <folding>
                 <element signature="e#0#19901#0" expanded="true" />
               </folding>
@@ -32,10 +32,124 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="mRouter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/mRouter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="160" lean-forward="true" selection-start-line="160" selection-end-line="160" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6268#6269#0" expanded="true" />
+                <element signature="e#6305#6306#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mRouter2.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="445">
+              <caret line="261" column="84" selection-start-line="261" selection-start-column="84" selection-end-line="261" selection-end-column="84" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5950#5951#0" expanded="true" />
+                <element signature="e#5987#5988#0" expanded="true" />
+                <element signature="e#6969#6970#0" expanded="true" />
+                <element signature="e#7019#7020#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mRoutingInfo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/util/mRoutingInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AllContactTime.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/util/AllContactTime.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="27" column="4" lean-forward="true" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#693#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageCover.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/util/MessageCover.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="16" column="59" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="59" />
+              <folding>
+                <element signature="e#0#693#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DTNSim.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/DTNSim.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="75" column="8" lean-forward="true" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#8565#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProphetRouter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/ProphetRouter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="119" column="4" lean-forward="true" selection-start-line="119" selection-start-column="4" selection-end-line="119" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#8596#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExternalMovementReader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="638">
+              <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>updateR</find>
+      <find>update</find>
+      <find>Prophet</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/routing/mRouter.java" />
+        <option value="$PROJECT_DIR$/routing/util/MessageCover.java" />
+        <option value="$PROJECT_DIR$/core/DTNSim.java" />
+        <option value="$PROJECT_DIR$/routing/mRouter2.java" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -57,6 +171,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -67,15 +182,25 @@
             <path>
               <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
               <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
               <item name="routing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="routing" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -154,44 +279,46 @@
       <option name="presentableId" value="Default" />
       <updated>1531144230999</updated>
       <workItem from="1531144232239" duration="200000" />
+      <workItem from="1531730863019" duration="7546000" />
+      <workItem from="1533110637471" duration="11319000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200000" />
+    <option name="totallyTimeSpent" value="19065000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info id="Image Layers" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32921347" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info id="Capture Tool" />
-      <window_info id="Designer" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20595238" />
-      <window_info anchor="right" id="Database" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.11460674" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20595238" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" />
-      <window_info anchor="right" id="Theme Preview" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.11460674" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,10 +330,149 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="6600">
+          <caret line="300" column="5" lean-forward="true" selection-start-line="300" selection-start-column="5" selection-end-line="300" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#19901#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/mRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3762">
+          <caret line="171" selection-start-line="171" selection-end-line="171" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6268#6269#0" expanded="true" />
+            <element signature="e#6305#6306#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="902">
           <caret line="41" column="62" lean-forward="true" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
           <folding>
             <element signature="e#0#19901#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6116">
+          <caret line="300" column="5" selection-start-line="300" selection-start-column="5" selection-end-line="300" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#19901#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/ProphetRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="119" column="4" lean-forward="true" selection-start-line="119" selection-start-column="4" selection-end-line="119" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#8596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2112">
+          <caret line="28" column="48" lean-forward="true" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#9771#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/util/mRoutingInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-552">
+          <folding>
+            <element signature="e#0#3497#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/DTNSim.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="75" column="8" lean-forward="true" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#8565#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/mRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="160" lean-forward="true" selection-start-line="160" selection-end-line="160" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6268#6269#0" expanded="true" />
+            <element signature="e#6305#6306#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/util/AllContactTime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="27" column="4" lean-forward="true" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#693#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/util/MessageCover.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#693#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="261" column="84" selection-start-line="261" selection-start-column="84" selection-end-line="261" selection-end-column="84" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5950#5951#0" expanded="true" />
+            <element signature="e#5987#5988#0" expanded="true" />
+            <element signature="e#6969#6970#0" expanded="true" />
+            <element signature="e#7019#7020#0" expanded="true" />
           </folding>
         </state>
       </provider>

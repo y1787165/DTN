@@ -45,25 +45,9 @@ btInterface.transmitRange = 10
 # routeType: route's type - for MapRouteMovement
 
 # Common settings for all groups
-Group.movementModel = RandomWaypoint
-Group.bufferSize = 5M
-# All nodes have the bluetooth interface
-Group.nrofInterfaces = 1
-Group.interface1 = btInterface
-# Walking speeds
-Group.speed = 0.5, 1.5
-# Message TTL of 300 minutes (5 hours)
-Group.msgTtl = 300
-Group.nrofHosts = 30
-Group.groupID = n
-
-
-## Movement model settings
-# seed for movement models' pseudo random number generator (default = 0)
-MovementModel.rngSeed = 1
-# World's size for Movement Models without implicit size (width, height; meters)
-MovementModel.worldSize = 450, 340
-# How long time to move hosts in the world before real simulation
+Group.movementModel = ExternalMovement
+ExternalMovement.file = C:\\Users\\hsnl\\Desktop\\SimTool\\move_trace800\\test.txt
+ExternalMovement.nrofPreload = 10
 
 
 ## Message creation parameters
@@ -97,5 +81,5 @@ Optimization.randomizeUpdateOrder = true
 
 
 Scenario.name = HAHAHA
-Group.router = mRouter
+Group.router = mRouter2
 
