@@ -86,9 +86,11 @@ public class mRouter2 extends ActiveRouter {
 	private Map<DTNHost, Integer> contactNumberTable;
 	private Map<DTNHost, Double> contactTimeTable;
 	private Map<DTNHost, Double> upTimeTable;
-	int[] contactIdicator;
+	int[][] contactIdicator;
 
 	String community_id = "";
+
+	public int pLength = 0;
 	//
 
 	/**
@@ -142,10 +144,12 @@ public class mRouter2 extends ActiveRouter {
 		contactTimeTable = new HashMap<DTNHost, Double>();
 		upTimeTable = new HashMap<DTNHost, Double>();
 
-		contactIdicator = new int[86400];
+		contactIdicator = new int[4][86400];
 
-		for ( int i=0 ; i<O_SIZE ; ++i ) {
-			contactIdicator[i] = 0;
+		for( int j=0 ; j<4 ; ++j ) {
+			for (int i = 0; i < O_SIZE; ++i) {
+				contactIdicator[j][i] = 0;
+			}
 		}
 	}
 
@@ -270,6 +274,44 @@ public class mRouter2 extends ActiveRouter {
 		// Reput the list to covered list
 		MessageCover.MessageCoverInfo.put(m.toString(),activeNodes);
 	}
+
+	// TODO : Check if the router is in active period
+	public boolean isInActivePeriod(){
+
+		return true;
+	}
+
+	private void PeriodCalculation(){
+		int t_period = 2;
+
+		for ( int t_period=2 ; t_period<24 ; ++t_period ){
+
+			// Calculate the length of periods
+			int eachPLength = 86400/t_period;
+
+			// Record 4 days accumalted contact times, +1 to prevent array out of bound
+			int[][] acuConNum = new int[4][t_period+1];
+
+			// contactIndicator records the contact history in first 4 days
+			// To detect a period, add up the contact time in a certain period
+			for ( int j=0 ; j<86400 ; ++j ){
+				acuConNum[0][j/eachPLength] += contactIdicator[0][j];
+				acuConNum[1][j/eachPLength] += contactIdicator[1][j];
+				acuConNum[2][j/eachPLength] += contactIdicator[2][j];
+				acuConNum[3][j/eachPLength] += contactIdicator[3][j];
+			}
+
+			// Conpare 4 accumalted contact number to see if it exists a period
+			int difSum = 0;
+
+			for ( int i=0 ; i<t_period ; ++i ) {
+				for( int j=0 ; j<4 ; ++j ){
+					acuConNum[j][i]
+				}
+			}
+		}
+	}
+
 	// Above is mRouter
 
 
@@ -317,8 +359,26 @@ public class mRouter2 extends ActiveRouter {
 			// Check the list of neighbors of the new connected node
 			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
 		}
+		else {
+			Double downTime = time;
+			Double upTime = upTimeTable.get(other);
+			/*
+			System.out.println( "Connection down at:"+downTime );
+			System.out.println( "from node " + self.toString());
+			System.out.println( "to node " + other.toString());
+			System.out.println( "Total time in this contact " + (downTime-upTime));*/
+
+			// Update the time when a contact is down.
+			updateContactTime( other , (downTime-upTime) );
+			updateGlobalContactTime( self );
+
+			// Indicator is 0 or 1, 1 means the contact is happened at time i.
+			for ( int i= upTime.intValue() ; i<downTime ; ++i ){
+				contactIdicator[i/O_SIZE][i%O_SIZE] = 1;
+			}
+		}
 	}
-	
+
 	/**
 	 * Updates delivery predictions for a host.
 	 * <CODE>P(a,b) = P(a,b)_old + (1 - P(a,b)_old) * P_INIT</CODE>
@@ -454,13 +514,18 @@ public class mRouter2 extends ActiveRouter {
 				 else if (  )
 				 */
 
-				if( otherRouterCanCoverMoreNodes(m) ) {
-					messages.add(new Tuple<Message, Connection>(m,con));
-					updateMessageCovered(m);
+				// Spreading ability
+				if ( otherRouterCanCoverMoreNodes(m) ) {
+					updateMessageAndInformation();
 				}
-				else if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
+				// Period information
+				else if ( othRouter.isInActivePeriod() && !this.isInActivePeriod() ) {
+					updateMessageAndInformation();
+				}
+				// DP value
+				else if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) ) {
 					// the other node has higher probability of delivery
-					messages.add(new Tuple<Message, Connection>(m,con));
+					updateMessageAndInformation();
 				}
 			}			
 		}
@@ -473,7 +538,12 @@ public class mRouter2 extends ActiveRouter {
 		Collections.sort(messages, new TupleComparator());
 		return tryMessagesForConnected(messages);	// try to send messages
 	}
-	
+
+	private void updateMessageAndInformation(){
+		messages.add(new Tuple<Message, Connection>(m,con));
+		updateMessageCovered(m);
+	}
+
 	/**
 	 * Comparator for Message-Connection-Tuples that orders the tuples by
 	 * their delivery probability by the host on the other side of the 

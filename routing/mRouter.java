@@ -37,7 +37,7 @@ public class mRouter extends ActiveRouter {
 	private Map<DTNHost, Integer> contactNumberTable;
 	private Map<DTNHost, Double> contactTimeTable;
 	private Map<DTNHost, Double> upTimeTable;
-	int[] contactIdicator;
+	int[][] contactIdicator;
 	
 	String community_id = "";
 	
@@ -69,10 +69,12 @@ public class mRouter extends ActiveRouter {
 		contactTimeTable = new HashMap<DTNHost, Double>();
 		upTimeTable = new HashMap<DTNHost, Double>();
 
-		contactIdicator = new int[86400];
+		contactIdicator = new int[4][86400];
 
-		for ( int i=0 ; i<O_SIZE ; ++i ) {
-			contactIdicator[i] = 0;
+		for( int j=0 ; j<4 ; ++j ) {
+			for (int i = 0; i < O_SIZE; ++i) {
+				contactIdicator[j][i] = 0;
+			}
 		}
 	}
 	
@@ -150,11 +152,8 @@ public class mRouter extends ActiveRouter {
 			updateGlobalContactTime( self );
 
 			// Indicator is 0 or 1, 1 means the contact is happened at time i.
-			if ( downTime >= 86400 ) {
-				downTime = 86399.0;
-			}
 			for ( int i= upTime.intValue() ; i<downTime ; ++i ){
-				contactIdicator[i] = 1;
+				contactIdicator[i/O_SIZE][i%O_SIZE] = 1;
 			}
 		}
 	}
