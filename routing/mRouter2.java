@@ -33,6 +33,8 @@ import java.util.Map;
 
 import routing.util.RoutingInfo;
 import routing.util.AllContactTime;
+import routing.util.ActivePeriod;
+import routing.util.MessageCover;
 
 import util.Tuple;
 
@@ -79,14 +81,21 @@ public class mRouter2 extends ActiveRouter {
 	/** last delivery predictability update (sim)time */
 	private double lastAgeUpdate;
 
-	// mRouter
-	private static final int O_SIZE = 86400;
+	/** mRouter */
+	private static final int O_SIZE = 1440;	/** 1440 minutes */
 
 	private Map<DTNHost, Map<DTNHost, Integer>> routingTable;
 	private Map<DTNHost, Integer> contactNumberTable;
 	private Map<DTNHost, Double> contactTimeTable;
 	private Map<DTNHost, Double> upTimeTable;
-	int[][] contactIdicator;
+
+	/** Period's information */
+	private Map<DTNHost,Integer[][]> contactIdicator;
+	private Map<DTNHost,Boolean[]> period;
+	private int THRES_T = 5;	/** THRES_T x O_SIZE = THRES_T minutes */
+	private double THRHES_DP = 0.5;
+	private double THRES_RATIO = 0.2; /** Threshold that  */
+	private boolean IS_OBSERVE_END = false;
 
 	String community_id = "";
 
@@ -115,7 +124,7 @@ public class mRouter2 extends ActiveRouter {
 
 		// mRouter
 		init();
-		System.out.println("Use s constructor");
+		//System.out.println("Use s constructor");
 	}
 
 	/**
@@ -133,24 +142,17 @@ public class mRouter2 extends ActiveRouter {
 
 		// mRouter
 		init();
-		System.out.println("User r counstructor");
+		//System.out.println("User r counstructor");
 	}
 
 
 	private void init(){
-
 		contactNumberTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 		contactTimeTable = new HashMap<DTNHost, Double>();
 		upTimeTable = new HashMap<DTNHost, Double>();
-
-		contactIdicator = new int[4][86400];
-
-		for( int j=0 ; j<4 ; ++j ) {
-			for (int i = 0; i < O_SIZE; ++i) {
-				contactIdicator[j][i] = 0;
-			}
-		}
+		period = new HashMap<>();
+		contactIdicator = new HashMap<>();
 	}
 
 	private void updateHistoryRoutingInformation() {
@@ -182,6 +184,7 @@ public class mRouter2 extends ActiveRouter {
 		*/
 	}
 
+	// Currently not used
 	private void updateContactNumbers(DTNHost otherHost) {
 
 		if( contactNumberTable.containsKey(otherHost) )
@@ -193,6 +196,7 @@ public class mRouter2 extends ActiveRouter {
 		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
 	}
 
+	// Currently not used
 	private void updateContactTime(DTNHost otherHost, double time){
 
 		if( contactTimeTable.containsKey(otherHost) )
@@ -204,6 +208,7 @@ public class mRouter2 extends ActiveRouter {
 		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
 	}
 
+	// Currently not used
 	private void updateGlobalContactNumbers(DTNHost self) {
 
 		AllContactTime.allContactNumberList.put( self,contactNumberTable  );
@@ -212,12 +217,18 @@ public class mRouter2 extends ActiveRouter {
 		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
 	}
 
+	// Currently not used
 	private void updateGlobalContactTime(DTNHost self){
 
 		AllContactTime.allContactList.put( self, contactTimeTable );
 
 		// Print accumalated time message to check whether it can work, it works now.
 		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
+	}
+
+	// Currently not used
+	private Map<DTNHost, Integer> getContactTable() {
+		return this.contactNumberTable;
 	}
 
 	private List<Connection> getOtherNodeCurrentConnectionList( DTNHost other ){
@@ -241,18 +252,17 @@ public class mRouter2 extends ActiveRouter {
 			routingTable.put(otherHost,otherContactTable);
 	}
 
-	private Map<DTNHost, Integer> getContactTable() {
-		return this.contactNumberTable;
-	}
 
 	// TODO: 2018/8/5 getActiveNodes in this period
 	public ArrayList<String> getActiveNodes(){
-		List<String> activeNodes = new ArrayList<>();
+		ArrayList<String> activeNodes = new ArrayList<>();
 
 		return activeNodes;
 	}
 
 	public boolean otherRouterCanCoverMoreNodes( Message m ){
+		return false;
+		/*
 		// Get active nodes of the other connected node
 		MessageRouter otherRouter = this.host.getRouter();
 		List<String> activeNodes = ((mRouter2)otherRouter).getActiveNodes();
@@ -262,14 +272,16 @@ public class mRouter2 extends ActiveRouter {
 		tmpActiveNodes.addAll(activeNodes);
 
 		// If both list contains all other elements , then the two lists are equaled
-		return !(activeNodes.containsAll(tmpActiveNodes) && tmpActiveNodes.containsAll(activeNodes));
+		return !(activeNodes.containsAll(tmpActiveNodes) && tmpActiveNodes.containsAll(activeNodes));*/
 	}
 
 	private void updateMessageCovered( Message m ){
 		// Merge two covered lists
-		List<String> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m);
+		List<String> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m.toString());
 		List<String> activeNodes = this.getActiveNodes();
-		activeNodes.addAll(tmpActiveNodes);
+
+		if( tmpActiveNodes!=null )
+			activeNodes.addAll(tmpActiveNodes);
 
 		// Reput the list to covered list
 		MessageCover.MessageCoverInfo.put(m.toString(),activeNodes);
@@ -281,38 +293,140 @@ public class mRouter2 extends ActiveRouter {
 		return true;
 	}
 
-	private void PeriodCalculation(){
-		int t_period = 2;
+	public int timeRemain1Hop( mRouter2 router, DTNHost des ){
+		Boolean[] contactInfo = router.period.get(des);
 
-		for ( int t_period=2 ; t_period<24 ; ++t_period ){
+		if( contactInfo == null )
+			return Integer.MAX_VALUE;
 
-			// Calculate the length of periods
-			int eachPLength = 86400/t_period;
+		int time = (int)(SimClock.getTime());
 
-			// Record 4 days accumalted contact times, +1 to prevent array out of bound
-			int[][] acuConNum = new int[4][t_period+1];
+		for( int i=0 ; i<86400 ; ++i ){
+			if( contactInfo[(i+time)%86400] )
+				return i;
+		}
 
-			// contactIndicator records the contact history in first 4 days
-			// To detect a period, add up the contact time in a certain period
-			for ( int j=0 ; j<86400 ; ++j ){
-				acuConNum[0][j/eachPLength] += contactIdicator[0][j];
-				acuConNum[1][j/eachPLength] += contactIdicator[1][j];
-				acuConNum[2][j/eachPLength] += contactIdicator[2][j];
-				acuConNum[3][j/eachPLength] += contactIdicator[3][j];
+		return Integer.MAX_VALUE;
+	}
+
+	public int timeRemain2Hop( mRouter2 router, DTNHost host ){
+		//Map<DTNHost,List<ActivePeriod>> oth_period_info = router.getOthPeriodInfo(host);
+		return 0;
+	}
+
+	public boolean othRouterHasBetterPeriod(mRouter2 othRouter, DTNHost des){
+		int r1Hop = this.timeRemain1Hop(this,des);
+		int r1HopOth = othRouter.timeRemain1Hop(othRouter,des);
+		int r2Hop = this.timeRemain2Hop(this,des);
+		int r2HopOth = othRouter.timeRemain2Hop(othRouter,des);
+
+		return ( r1Hop > r1HopOth || r1Hop > r2HopOth || r2Hop > r2HopOth );
+	}
+
+	private void periodCalculation( DTNHost des ){
+		Integer[][] periInfo = contactIdicator.get(des);
+		int[] judge_arr = new int[O_SIZE];
+		Boolean[] put_to_p_info = new Boolean[O_SIZE];
+
+		/** Initialized the array */
+		for( int i=0 ; i<O_SIZE ; ++i ){
+			judge_arr[i] = 0;
+			put_to_p_info[i] = false;
+		}
+
+		/** Add up the 4 days information */
+		for( int i=0 ; i<4 ; ++i ){
+			for( int j=0 ; j<O_SIZE ; ++j ){
+				judge_arr[j] += (int)periInfo[i][j];
 			}
+		}
 
-			// Conpare 4 accumalted contact number to see if it exists a period
-			int difSum = 0;
+		/** Merge the contacts into a period ,
+		 *  then judge if the period is strong enough
+		 * */
+		boolean new_period = true;
+		int str=0,pre=0,end=0;
 
-			for ( int i=0 ; i<t_period ; ++i ) {
-				for( int j=0 ; j<4 ; ++j ){
-					acuConNum[j][i]
+		// Traverse the array
+		for( int i=0 ; i<O_SIZE ; ++i ) {
+			// If there is a contact in time i
+			if( judge_arr[i]>0 ){
+				// Just for the first case
+				if( new_period ){
+					new_period = false;
+					str = pre = i;
+				}
+				// If <= Threshold, the contacts are in the same period
+				else if( i-pre <= THRES_T ){
+					pre = i;
+				}
+				// Else means that we find the max length of the period
+				// Judge if the period is strong enough
+				else {
+					// If so, mark the period and put it into period Map
+					if( isPeriod(judge_arr,str,pre) ) {
+						for (int j = 0; j < O_SIZE; ++j) {
+							put_to_p_info[j] = true;
+						}
+						period.put(des,put_to_p_info);
+					}
+					str = pre = i;
 				}
 			}
 		}
 	}
 
-	// Above is mRouter
+	private boolean isPeriod( int[] judge_arr,int str,int end ){
+		int tot_cont_time = 0;
+		int period_len = end-str;
+
+		if( period_len < THRES_T )
+			return false;
+
+		for( int i=str ; i<end ; ++i ){
+			tot_cont_time += judge_arr[i];
+		}
+
+		if ( tot_cont_time*1.0/period_len > THRES_RATIO )
+			return true;
+		else {
+			// TODO : try to find the smaller period, and check if the period is strong enough
+			return false;
+		}
+	}
+
+	// For other DTNHosts to use
+	public Map<DTNHost,List<ActivePeriod>> getOthPeriodInfo (){
+		ArrayList<ActivePeriod> single_periods = new ArrayList<>();
+		Map<DTNHost,List<ActivePeriod>> all_period_info = new HashMap<>();
+
+		for( Map.Entry<DTNHost,Boolean[]> entry : period.entrySet() ){
+			DTNHost host = entry.getKey();
+			Boolean[] pInfo = entry.getValue();
+			boolean state_str = true;
+			int str=0,end=0;
+
+			for( int i=0 ; i<pInfo.length ; ++i ){
+				if ( pInfo[i] && state_str){
+					str = i;
+				}
+				/** Not in end state, and it stops or is the last one */
+				else if ( !state_str &&  (!pInfo[i] || (pInfo[i] && i==pInfo.length-1)) ){
+					ActivePeriod activePeriod = new ActivePeriod(str,i-1);
+					single_periods.add(activePeriod);
+					state_str = true;
+				}
+			}
+			all_period_info.put(host,single_periods);
+		}
+		return all_period_info;
+	}
+
+	private void updateOthPeriodInfo(DTNHost otherHost){
+
+	}
+
+	/** Above is mRouter */
 
 
 	/**
@@ -344,20 +458,17 @@ public class mRouter2 extends ActiveRouter {
 			updateTransitivePreds(otherHost);
 			//
 
-			/*
-			System.out.println( "Connection up at:"+SimClock.getTime() );
-			System.out.println( "from node " + self.toString());
-			System.out.println( "to node " + other.toString());*/
-
 			// Record the start time
 			upTimeTable.put( other , time );
-
 			// Update the contact number when a contact occurs.
 			updateContactNumbers(other);
 			updateGlobalContactNumbers(self);
 
 			// Check the list of neighbors of the new connected node
 			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
+
+			// Update the period information
+			updateOthPeriodInfo(otherHost);
 		}
 		else {
 			Double downTime = time;
@@ -372,9 +483,39 @@ public class mRouter2 extends ActiveRouter {
 			updateContactTime( other , (downTime-upTime) );
 			updateGlobalContactTime( self );
 
-			// Indicator is 0 or 1, 1 means the contact is happened at time i.
-			for ( int i= upTime.intValue() ; i<downTime ; ++i ){
-				contactIdicator[i/O_SIZE][i%O_SIZE] = 1;
+			// If is in observe time
+			if( !IS_OBSERVE_END ) {
+				// Update array
+				Integer[][] toUpdate = contactIdicator.get(other);
+				if ( toUpdate == null) {
+					toUpdate = new Integer[4][O_SIZE];
+					for( int i=0 ; i<4 ; ++i )
+						for ( int j=0 ; j<toUpdate[0].length ; ++j )
+							toUpdate[i][j] = 0;
+					contactIdicator.put(other,toUpdate);
+				} else {
+					// Indicator is 0 or 1, 1 means the contact is happened at time i.
+					for (int i = upTime.intValue(); i < downTime; ++i) {
+						int tmp = i / 60;
+						int which_day = tmp/O_SIZE;
+						// There are some cases will end the connection after obseved time.
+						// Check this circumstance, if which_day > 3, is the last observe
+						// And last, calculate the period
+						if( which_day > 3 ){
+							which_day = 3;
+							IS_OBSERVE_END = true;
+						}
+						//System.out.println(tmp+" "+which_day+" "+tmp%O_SIZE);
+						/*if( toUpdate==null )
+							System.out.println("Fuck you");*/
+						toUpdate[which_day][tmp%O_SIZE]++;
+					}
+					// Put the latest information to contactIndicator
+					contactIdicator.put(other,toUpdate);
+					if ( IS_OBSERVE_END ){
+						periodCalculation(other);
+					}
+				}
 			}
 		}
 	}
@@ -498,34 +639,27 @@ public class mRouter2 extends ActiveRouter {
 			if (othRouter.isTransferring()) {
 				continue; // skip hosts that are transferring
 			}
-			
+
 			for (Message m : msgCollection) {
 				if (othRouter.hasMessage(m.getId())) {
 					continue; // skip messages that the other one has
 				}
 
-				/**
-				if ( current_cover U othRouter_cover != current_cover ){
-				 	messages.add(new Tuple<Message, Connection>(m,con));
-				 }
-				 else if ( othRouter_cover.isInActivePeriod() ){
-				 	messages.add(new Tuple<Message, Connection>(m,con));
-				 }
-				 else if (  )
-				 */
-
-				// Spreading ability
-				if ( otherRouterCanCoverMoreNodes(m) ) {
-					updateMessageAndInformation();
+				// DP value
+				if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) && othRouter.getPredFor(m.getTo()) >= THRHES_DP  ) {
+					// the other node has higher probability of delivery
+					messages.add(new Tuple<Message, Connection>(m,con));
+					updateMessageCovered(m);
 				}
 				// Period information
-				else if ( othRouter.isInActivePeriod() && !this.isInActivePeriod() ) {
-					updateMessageAndInformation();
+				else if ( othRouterHasBetterPeriod(othRouter,m.getTo())) {
+					messages.add(new Tuple<Message, Connection>(m,con));
+					updateMessageCovered(m);
 				}
-				// DP value
-				else if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) ) {
-					// the other node has higher probability of delivery
-					updateMessageAndInformation();
+				// Spreading ability
+				else if ( otherRouterCanCoverMoreNodes(m) ) {
+					messages.add(new Tuple<Message, Connection>(m,con));
+					updateMessageCovered(m);
 				}
 			}			
 		}
@@ -535,13 +669,8 @@ public class mRouter2 extends ActiveRouter {
 		}
 		
 		// sort the message-connection tuples
-		Collections.sort(messages, new TupleComparator());
+		// Collections.sort(messages, new TupleComparator());
 		return tryMessagesForConnected(messages);	// try to send messages
-	}
-
-	private void updateMessageAndInformation(){
-		messages.add(new Tuple<Message, Connection>(m,con));
-		updateMessageCovered(m);
 	}
 
 	/**
