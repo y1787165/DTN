@@ -374,6 +374,15 @@ public class mRouter2 extends ActiveRouter {
 				}
 			}
 		}
+
+		/** The code under this line is to check the period works or not*/
+		Boolean[] for_debug = period.get(des);
+		for( int i=0 ; i<for_debug.length ; ++i ){
+			if( for_debug[i] ){
+				System.out.printf(i+" ");
+			}
+		}
+		System.out.println("");
 	}
 
 	private boolean isPeriod( int[] judge_arr,int str,int end ){
