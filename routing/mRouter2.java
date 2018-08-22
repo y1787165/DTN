@@ -365,7 +365,7 @@ public class mRouter2 extends ActiveRouter {
 				else {
 					// If so, mark the period and put it into period Map
 					if( isPeriod(judge_arr,str,pre) ) {
-						for (int j = 0; j < O_SIZE; ++j) {
+						for (int j=str; j<pre; ++j) {
 							put_to_p_info[j] = true;
 						}
 						period.put(des,put_to_p_info);
@@ -377,12 +377,16 @@ public class mRouter2 extends ActiveRouter {
 
 		/** The code under this line is to check the period works or not*/
 		Boolean[] for_debug = period.get(des);
-		for( int i=0 ; i<for_debug.length ; ++i ){
-			if( for_debug[i] ){
-				System.out.printf(i+" ");
+		if( for_debug==null )
+			System.out.println("No Period");
+		else {
+			for (int i = 0; i < for_debug.length; ++i) {
+				if (for_debug[i]) {
+					System.out.printf(i + " ");
+				}
 			}
+			System.out.println("");
 		}
-		System.out.println("");
 	}
 
 	private boolean isPeriod( int[] judge_arr,int str,int end ){
