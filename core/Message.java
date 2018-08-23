@@ -76,7 +76,7 @@ public class Message implements Comparable<Message> {
 		
 		this.timeCreated = SimClock.getTime();
 		this.timeReceived = this.timeCreated;
-		this.initTtl = INFINITE_TTL;
+		this.initTtl = 30;
 		this.responseSize = 0;
 		this.requestMsg = null;
 		this.properties = null;

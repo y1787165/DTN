@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import core.DTNHost;
+import core.Message;
 import routing.util.CommunityList;
 import routing.util.AllContactTime;
 import routing.util.MessageCover;
@@ -79,37 +80,7 @@ public class DTNSim {
 		CommunityList.list = new HashMap<DTNHost,String>();
 		AllContactTime.allContactList = new HashMap<DTNHost,Map<DTNHost,Double>>();
 		AllContactTime.allContactNumberList = new HashMap<DTNHost,Map<DTNHost,Integer>>();
-		MessageCover.MessageCoverInfo = new HashMap<String,List<String>>();
-/*
-		Thread thread = new Thread(new Runnable() {
-			public void run() {
-
-				boolean cluster = false;
-
-				while(true) {
-					System.out.print("T");
-					try {
-						if( SimClock.getTime() > 4000 ) {
-							if( cluster == false ){
-
-								printAllContactMessages();
-								cluster = true;
-							}
-							else {
-								break;
-							}
-						}
-
-						// thread to sleep for 1000 milliseconds
-						Thread.sleep(1000);
-					} catch (Exception e) {
-						System.out.println(e);
-					}
-				}
-			}
-		});
-		thread.setDaemon(true);
-		thread.start();*/
+		MessageCover.MessageCoverInfo = new HashMap<Message,List<DTNHost>>();
 
 		/* set US locale to parse decimals in consistent way */
 		java.util.Locale.setDefault(java.util.Locale.US);
@@ -287,10 +258,5 @@ public class DTNSim {
 	 */
 	private static void print(String txt) {
 		System.out.println(txt);
-	}
-
-	public void KClique () {
-
-
 	}
 }

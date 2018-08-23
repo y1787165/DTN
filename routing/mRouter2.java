@@ -15,19 +15,11 @@ import java.util.Map;
 import routing.util.RoutingInfo;
 
 import util.Tuple;
-
 import core.Connection;
 import core.DTNHost;
 import core.Message;
 import core.Settings;
 import core.SimClock;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 //import com.sun.xml.internal.bind.marshaller.Messages;
 
@@ -92,10 +84,16 @@ public class mRouter2 extends ActiveRouter {
 	/** Period's information */
 	private Map<DTNHost,Integer[][]> contactIdicator;
 	private Map<DTNHost,Boolean[]> period;
+	private Map<DTNHost,Map<DTNHost,Boolean[]>> all_oth_period;
 	private int THRES_T = 5;	/** THRES_T x O_SIZE = THRES_T minutes */
 	private double THRHES_DP = 0.5;
 	private double THRES_RATIO = 0.2; /** Threshold that  */
 	private boolean IS_OBSERVE_END = false;
+
+	/** These parameters are for debug */
+	int SPREAD = 0;
+	int DP = 0;
+	int PERIOD = 0;
 
 	String community_id = "";
 
@@ -145,13 +143,13 @@ public class mRouter2 extends ActiveRouter {
 		//System.out.println("User r counstructor");
 	}
 
-
 	private void init(){
 		contactNumberTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 		contactTimeTable = new HashMap<DTNHost, Double>();
 		upTimeTable = new HashMap<DTNHost, Double>();
 		period = new HashMap<>();
+		all_oth_period = new HashMap<DTNHost,Map<DTNHost,Boolean[]> >();
 		contactIdicator = new HashMap<>();
 	}
 
@@ -252,6 +250,9 @@ public class mRouter2 extends ActiveRouter {
 			routingTable.put(otherHost,otherContactTable);
 	}
 
+	public Map<DTNHost,Boolean[]> getPeriod(){
+		return this.period;
+	}
 
 	// TODO: 2018/8/5 getActiveNodes in this period
 	public ArrayList<String> getActiveNodes(){
@@ -260,24 +261,80 @@ public class mRouter2 extends ActiveRouter {
 		return activeNodes;
 	}
 
-	public boolean otherRouterCanCoverMoreNodes( Message m ){
-		return false;
-		/*
-		// Get active nodes of the other connected node
-		MessageRouter otherRouter = this.host.getRouter();
-		List<String> activeNodes = ((mRouter2)otherRouter).getActiveNodes();
-
-		// Add original cover to other cover
-		List<String> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m);
-		tmpActiveNodes.addAll(activeNodes);
-
-		// If both list contains all other elements , then the two lists are equaled
-		return !(activeNodes.containsAll(tmpActiveNodes) && tmpActiveNodes.containsAll(activeNodes));*/
+	public List<DTNHost> getCurrentMessageCovered( Message m ){
+		List<DTNHost> coveredList = MessageCover.MessageCoverInfo.get(m);
+		if( coveredList == null ) {
+			coveredList = new ArrayList<>();
+			MessageCover.MessageCoverInfo.put(m,coveredList);
+		}
+		return coveredList;
 	}
 
+	private List<DTNHost> getStrongDP( Map<DTNHost,Double> preds ){
+		List<DTNHost> cover = new ArrayList<>();
+		for( Map.Entry<DTNHost,Double> entry : preds.entrySet() ){
+			if( entry.getValue() > THRHES_DP ){
+				cover.add(entry.getKey());
+			}
+		}
+		return cover;
+	}
+
+	private List<DTNHost> getStrongPeriod( Map<DTNHost,Boolean[]> p, Message m ){
+		List<DTNHost> cover = new ArrayList<>();
+		int cur_time = (int)(SimClock.getTime());
+
+		for( Map.Entry<DTNHost,Boolean[]> entry : p.entrySet() ){
+			DTNHost host = entry.getKey();
+			Boolean[] p_info = entry.getValue();
+			// In minute
+			int r_time = 0;
+			for( int i=cur_time ; i<p_info.length ; ++i ){
+				if( p_info[i] )
+					break;
+				++r_time;
+			}
+			if( r_time < m.getTtl() ){
+				cover.add(host);
+			}
+		}
+		return cover;
+	}
+
+	private List<DTNHost> getHostCurCover( mRouter2 router, Message m ){
+		List<DTNHost> cur_cover = new ArrayList<>();
+		cur_cover.addAll( getStrongDP( router.getAllPreds()) );
+		cur_cover.addAll( getStrongPeriod( router.getPeriod(),m) );
+		return cur_cover;
+	}
+
+	public boolean otherRouterCanCoverMoreNodes( DTNHost othHost, mRouter2 othRouter , Message m ){
+		boolean result;
+		// Get self and others' DPs
+		List<DTNHost> othCover = getHostCurCover(othRouter,m);
+		List<DTNHost> selfCover = getHostCurCover(this,m);
+		List<DTNHost> curCover = getCurrentMessageCovered(m);
+
+		// If current cover or other cover is strong enough, we don't need to pass this message.
+		result = !curCover.containsAll(othCover) && !selfCover.containsAll(othCover);
+
+		if( result ){
+			//System.out.println("Pass by spreading factor!");
+		}
+
+		// After this connection, the covered node is now the merged list
+		List<DTNHost> afterCover = new ArrayList<>();
+		afterCover.addAll(othCover);
+		afterCover.addAll(selfCover);
+		afterCover.addAll(curCover);
+		MessageCover.MessageCoverInfo.put(m,afterCover);
+
+		return result;
+	}
+/*
 	private void updateMessageCovered( Message m ){
 		// Merge two covered lists
-		List<String> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m.toString());
+		List<DTNHost> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m);
 		List<String> activeNodes = this.getActiveNodes();
 
 		if( tmpActiveNodes!=null )
@@ -285,7 +342,7 @@ public class mRouter2 extends ActiveRouter {
 
 		// Reput the list to covered list
 		MessageCover.MessageCoverInfo.put(m.toString(),activeNodes);
-	}
+	}*/
 
 	// TODO : Check if the router is in active period
 	public boolean isInActivePeriod(){
@@ -301,24 +358,69 @@ public class mRouter2 extends ActiveRouter {
 
 		int time = (int)(SimClock.getTime());
 
-		for( int i=0 ; i<86400 ; ++i ){
-			if( contactInfo[(i+time)%86400] )
+		for( int i=0 ; i<O_SIZE ; ++i ){
+			if( contactInfo[(i+time)%O_SIZE] )
 				return i;
 		}
 
 		return Integer.MAX_VALUE;
 	}
 
-	public int timeRemain2Hop( mRouter2 router, DTNHost host ){
-		//Map<DTNHost,List<ActivePeriod>> oth_period_info = router.getOthPeriodInfo(host);
-		return 0;
+	public int timeRemain2Hop( DTNHost des, Message m ){
+		int total_num = 0;
+		int min_time = Integer.MAX_VALUE;
+
+		/** Traverse the history other host period imformation*/
+		for( Map.Entry<DTNHost,Map<DTNHost,Boolean[]>> entry : all_oth_period.entrySet() ){
+			/**
+			 * 1. Find the DTNHost A that can be meet in ttl time
+			 * 2. Find the time that A can meet the des.
+			 * 3. Add up the time, if it < ttl , good.
+			 * */
+			DTNHost host = entry.getKey();
+			Boolean[] hop_1_period = period.get(host);
+			/** If there is no period between self and the host, it's not gonna be useful */
+			if( hop_1_period==null )
+				continue;
+			int cur_time = (int)(SimClock.getTime());
+			int r_time = 0;
+			/** Calculate the remain time that can meet the host */
+			for( int i=0 ; i<O_SIZE ; ++i  ){
+				if( hop_1_period[(i+cur_time)%O_SIZE] )
+					break;
+				++r_time;
+			}
+			/** If the time that meets the host will exceed the ttl, give up */
+			if( m.getTtl() < r_time )
+				continue;
+			/** Now calculate the time between a certain host to contact with destination
+			 * 	Because we shuold meet the node before the node meets des, so add the r+time to cur_time
+			 * */
+			cur_time += r_time;
+			Map<DTNHost,Boolean[]> p_info = entry.getValue();
+			Boolean[] to_des = p_info.get(des);
+			if( to_des==null )
+				continue;
+			for( int i=0 ; i<O_SIZE ; ++i ){
+				if( to_des[(i+cur_time)%O_SIZE] )
+					break;
+				++r_time;
+			}
+			if( m.getTtl() > r_time ){
+				min_time = Math.min( min_time,r_time );
+				++total_num;
+			}
+		}
+
+		return min_time;
 	}
 
-	public boolean othRouterHasBetterPeriod(mRouter2 othRouter, DTNHost des){
+	public boolean othRouterHasBetterPeriod(DTNHost othHost, mRouter2 othRouter, Message m){
+		DTNHost des = m.getTo();
 		int r1Hop = this.timeRemain1Hop(this,des);
 		int r1HopOth = othRouter.timeRemain1Hop(othRouter,des);
-		int r2Hop = this.timeRemain2Hop(this,des);
-		int r2HopOth = othRouter.timeRemain2Hop(othRouter,des);
+		int r2Hop = this.timeRemain2Hop(des,m);
+		int r2HopOth = othRouter.timeRemain2Hop(des,m);
 
 		return ( r1Hop > r1HopOth || r1Hop > r2HopOth || r2Hop > r2HopOth );
 	}
@@ -435,8 +537,26 @@ public class mRouter2 extends ActiveRouter {
 		return all_period_info;
 	}
 
-	private void updateOthPeriodInfo(DTNHost otherHost){
+	/***/
+	private void updateCover( Message m ){
+		List<DTNHost> cur_cover = getCurrentMessageCovered(m);
+		List<DTNHost> self_cover = getHostCurCover(this,m);
 
+		cur_cover.addAll(self_cover);
+		MessageCover.MessageCoverInfo.put(m,cur_cover);
+	}
+
+	public Map<DTNHost, Double> getAllPreds(){
+		return getDeliveryPreds();
+	}
+
+	private void updateOthPeriodInfo(DTNHost other){
+		mRouter2 othRouter = (mRouter2)other.getRouter();
+		Map<DTNHost,Boolean[]> oth_periods = othRouter.getPeriod();
+		if( oth_periods==null )
+			oth_periods = new HashMap<DTNHost,Boolean[]>();
+
+		all_oth_period.put(other,oth_periods);
 	}
 
 	/** Above is mRouter */
@@ -481,7 +601,7 @@ public class mRouter2 extends ActiveRouter {
 			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
 
 			// Update the period information
-			updateOthPeriodInfo(otherHost);
+			updateOthPeriodInfo(other);
 		}
 		else {
 			Double downTime = time;
@@ -662,17 +782,14 @@ public class mRouter2 extends ActiveRouter {
 				if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) && othRouter.getPredFor(m.getTo()) >= THRHES_DP  ) {
 					// the other node has higher probability of delivery
 					messages.add(new Tuple<Message, Connection>(m,con));
-					updateMessageCovered(m);
 				}
 				// Period information
-				else if ( othRouterHasBetterPeriod(othRouter,m.getTo())) {
+				else if ( othRouterHasBetterPeriod(other,othRouter,m)) {
 					messages.add(new Tuple<Message, Connection>(m,con));
-					updateMessageCovered(m);
 				}
 				// Spreading ability
-				else if ( otherRouterCanCoverMoreNodes(m) ) {
+				else if ( otherRouterCanCoverMoreNodes(other,othRouter,m) ) {
 					messages.add(new Tuple<Message, Connection>(m,con));
-					updateMessageCovered(m);
 				}
 			}			
 		}
@@ -742,6 +859,18 @@ public class mRouter2 extends ActiveRouter {
 	public MessageRouter replicate() {
 		mRouter2 r = new mRouter2(this);
 		return r;
+	}
+
+	@Override
+	public int receiveMessage(Message m, DTNHost from) {
+		updateCover(m);
+		int recvCheck = checkReceiving(m, from);
+		if (recvCheck != RCV_OK) {
+			return recvCheck;
+		}
+
+		// seems OK, start receiving the message
+		return super.receiveMessage(m, from);
 	}
 
 }

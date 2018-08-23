@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import core.DTNHost;
+import core.Message;
+
 
 public class MessageCover {
 	
-	public static Map<String,List<String>> MessageCoverInfo;
+	public static Map<Message,List<DTNHost>> MessageCoverInfo;
 	
 	/*
 	public CommunityList(){

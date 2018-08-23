@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/reports/TestDefaultPro/TestDefaultMRouter_MessageStatsReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/TestDefaultPro/TestDefaultMRouter_MessageStatsReport.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/default_scenario_ConnectivityONEReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/default_scenario_ConnectivityONEReport.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reports/default_scenario_ContactTimesReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/default_scenario_ContactTimesReport.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/DTNSim.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/DTNSim.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing/util/MessageCover.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/util/MessageCover.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing/util/MessageCover.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/util/MessageCover.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,22 +31,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4752" />
+          <entry key="java" value="8576" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4752" />
+          <entry key="JAVA" value="8576" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="3" />
+          <entry key="class" value="1" />
+          <entry key="java" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="3" />
+          <entry key="CLASS" value="1" />
+          <entry key="JAVA" value="12" />
         </counts>
       </usages-collector>
     </session>
@@ -52,14 +58,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="377" column="55" lean-forward="true" selection-start-line="377" selection-start-column="55" selection-end-line="377" selection-end-column="55" />
+            <state relative-caret-position="392">
+              <caret line="392" column="59" selection-start-line="392" selection-start-column="59" selection-end-line="392" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2632#2775#0" />
-                <element signature="e#2632#3177#0" />
                 <element signature="e#3180#3280#0" />
-                <element signature="e#3513#3908#0" />
+                <element signature="e#3180#3509#0" />
                 <element signature="e#3911#4111#0" />
                 <element signature="e#4114#4572#0" />
                 <element signature="e#4575#4995#0" />
@@ -67,22 +72,34 @@
                 <element signature="e#5438#5753#0" />
                 <element signature="e#5756#6069#0" />
                 <element signature="e#6433#6718#0" />
+                <element signature="e#7376#7377#0" expanded="true" />
+                <element signature="e#7388#7389#0" expanded="true" />
+                <element signature="e#10199#11851#0" />
+                <element signature="e#11804#12225#0" />
+                <element signature="e#12228#13083#0" />
+                <element signature="e#15026#15027#0" expanded="true" />
+                <element signature="e#15058#15059#0" expanded="true" />
                 <element signature="e#8938#8982#0" />
-                <element signature="e#12428#12429#0" expanded="true" />
-                <element signature="e#12478#12479#0" expanded="true" />
+                <element signature="e#15447#15448#0" expanded="true" />
+                <element signature="e#15497#15498#0" expanded="true" />
                 <element signature="e#10722#10877#0" />
-                <element signature="e#10722#11055#0" />
-                <element signature="e#11059#11244#0" />
-                <element signature="e#11059#11447#0" />
                 <element signature="e#11451#11643#0" />
-                <element signature="e#11451#12301#0" />
                 <element signature="e#12304#12537#0" />
-                <element signature="e#12304#12891#0" />
-                <element signature="e#12895#13015#0" />
-                <element signature="e#12895#13143#0" />
                 <element signature="e#15473#15646#0" />
                 <element signature="e#16458#16912#0" />
                 <element signature="e#16916#17011#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routing/EpidemicRouter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#1327#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -106,40 +123,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="111" column="24" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/SimClock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+            <state relative-caret-position="-1166">
+              <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
               <folding>
-                <element signature="e#0#1823#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routing/util/mRoutingInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routing/util/AllContactTime.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#693#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,31 +136,10 @@
         <entry file="file://$PROJECT_DIR$/routing/util/MessageCover.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="264">
-              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+              <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routing/ProphetRouter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6160">
-              <caret line="301" column="13" selection-start-line="301" selection-start-column="13" selection-end-line="301" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#8596#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="638">
-              <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -182,14 +148,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>updateR</find>
-      <find>update</find>
-      <find>Prophet</find>
-      <find>buffer</find>
       <find>routingTable</find>
       <find>getActiveNodes</find>
       <find>des</find>
-      <find>to</find>
       <find>sim</find>
       <find>period</find>
       <find>contactIdicator</find>
@@ -199,6 +160,24 @@
       <find>other.toString</find>
       <find>O_SIZE</find>
       <find>system</find>
+      <find>mRouter2</find>
+      <find>preds</find>
+      <find>getPred</find>
+      <find>oth</find>
+      <find>to</find>
+      <find>othRouter</find>
+      <find>SimClock</find>
+      <find>ttl</find>
+      <find>buffer</find>
+      <find>bufferSize</find>
+      <find>updateCov</find>
+      <find>oth_period</find>
+      <find>getHost</find>
+      <find>getPeriod</find>
+      <find>updateMessageCovered</find>
+      <find>entrySet</find>
+      <find>all_oth_period</find>
+      <find>pass</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -207,10 +186,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/routing/util/MessageCover.java" />
         <option value="$PROJECT_DIR$/routing/mRouter.java" />
         <option value="$PROJECT_DIR$/routing/ActivePeriod.java" />
         <option value="$PROJECT_DIR$/routing/util/ActivePeriod.java" />
+        <option value="$PROJECT_DIR$/routing/util/MessageCover.java" />
+        <option value="$PROJECT_DIR$/core/Message.java" />
         <option value="$PROJECT_DIR$/core/DTNSim.java" />
         <option value="$PROJECT_DIR$/routing/mRouter2.java" />
       </list>
@@ -221,6 +201,12 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
@@ -248,17 +234,6 @@
               <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
-              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
-              <item name="routing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
-              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
-              <item name="routing" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -271,7 +246,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534920291391" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535032752203" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -340,8 +315,8 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1972873" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7804196" visible="true" weight="0.23859432" />
+      <window_info id="Structure" order="1" sideWeight="0.21958043" side_tool="true" visible="true" weight="0.23859432" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -357,7 +332,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32921347" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" visible="true" weight="0.1743649" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -367,7 +342,7 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info anchor="right" id="Maven Projects" order="8" weight="0.3298397" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,25 +356,25 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>615</line>
+          <line>735</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>453</line>
+          <line>573</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>621</line>
+          <line>741</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>632</line>
+          <line>752</line>
           <properties />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -412,16 +387,6 @@
         <state relative-caret-position="-552" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="29" column="3" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#19901#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routing/mRouter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2904">
@@ -429,47 +394,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/SimClock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#1823#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routing/util/mRoutingInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routing/ProphetRouter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6160">
-          <caret line="301" column="13" selection-start-line="301" selection-start-column="13" selection-end-line="301" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#8596#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="111" column="24" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -490,24 +414,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/DTNSim.java">
+    <entry file="file://$PROJECT_DIR$/routing/util/mRoutingInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="111" column="25" selection-start-line="111" selection-start-column="25" selection-end-line="111" selection-end-column="25" />
+        <state relative-caret-position="469">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/SimClock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#1823#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routing/util/MessageCover.java">
+    <entry file="file://$PROJECT_DIR$/input/ExternalMovementReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+        <state relative-caret-position="22">
+          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/ProphetRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#8596#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/DTNHost.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="240" column="39" selection-start-line="240" selection-start-column="33" selection-end-line="240" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#13856#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/MessageRouter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-726" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routing/util/ActivePeriod.java">
@@ -523,16 +476,85 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="67" column="9" lean-forward="true" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#19901#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/MessageRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="115" column="49" lean-forward="true" selection-start-line="115" selection-start-column="49" selection-end-line="115" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#21162#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/DTNSim.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="239" column="9" lean-forward="true" selection-start-line="239" selection-start-column="9" selection-end-line="239" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1741">
+          <caret line="104" column="4" lean-forward="true" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#28337#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/EpidemicRouter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#1327#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routing/util/MessageCover.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1166">
+          <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="377" column="55" lean-forward="true" selection-start-line="377" selection-start-column="55" selection-end-line="377" selection-end-column="55" />
+        <state relative-caret-position="392">
+          <caret line="392" column="59" selection-start-line="392" selection-start-column="59" selection-end-line="392" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2632#2775#0" />
-            <element signature="e#2632#3177#0" />
             <element signature="e#3180#3280#0" />
-            <element signature="e#3513#3908#0" />
+            <element signature="e#3180#3509#0" />
             <element signature="e#3911#4111#0" />
             <element signature="e#4114#4572#0" />
             <element signature="e#4575#4995#0" />
@@ -540,19 +562,19 @@
             <element signature="e#5438#5753#0" />
             <element signature="e#5756#6069#0" />
             <element signature="e#6433#6718#0" />
+            <element signature="e#7376#7377#0" expanded="true" />
+            <element signature="e#7388#7389#0" expanded="true" />
+            <element signature="e#10199#11851#0" />
+            <element signature="e#11804#12225#0" />
+            <element signature="e#12228#13083#0" />
+            <element signature="e#15026#15027#0" expanded="true" />
+            <element signature="e#15058#15059#0" expanded="true" />
             <element signature="e#8938#8982#0" />
-            <element signature="e#12428#12429#0" expanded="true" />
-            <element signature="e#12478#12479#0" expanded="true" />
+            <element signature="e#15447#15448#0" expanded="true" />
+            <element signature="e#15497#15498#0" expanded="true" />
             <element signature="e#10722#10877#0" />
-            <element signature="e#10722#11055#0" />
-            <element signature="e#11059#11244#0" />
-            <element signature="e#11059#11447#0" />
             <element signature="e#11451#11643#0" />
-            <element signature="e#11451#12301#0" />
             <element signature="e#12304#12537#0" />
-            <element signature="e#12304#12891#0" />
-            <element signature="e#12895#13015#0" />
-            <element signature="e#12895#13143#0" />
             <element signature="e#15473#15646#0" />
             <element signature="e#16458#16912#0" />
             <element signature="e#16916#17011#0" />
