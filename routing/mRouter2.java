@@ -26,7 +26,6 @@ import core.SimClock;
 import routing.util.RoutingInfo;
 import routing.util.AllContactTime;
 import routing.util.ActivePeriod;
-import routing.util.MessageCover;
 
 import util.Tuple;
 
@@ -88,6 +87,8 @@ public class mRouter2 extends ActiveRouter {
 
 	private Map<DTNHost,List<ActivePeriod>> periods;
 	private Map<DTNHost,Map<DTNHost,List<ActivePeriod>>> all_oth_periods;
+
+	public Map<Message,List<DTNHost>> MessageCoverInfo;
 
 	private int THRES_T = 5;	/** THRES_T x O_SIZE = THRES_T minutes */
 	private double THRHES_DP = 0.5;
@@ -157,6 +158,7 @@ public class mRouter2 extends ActiveRouter {
 		contactIdicator = new HashMap<>();
 		periods = new HashMap<DTNHost,List<ActivePeriod>>();
 		all_oth_periods = new HashMap<>();
+		MessageCoverInfo = new HashMap<>();
 	}
 
 	public Map<DTNHost,Boolean[]> getPeriod(){
@@ -167,11 +169,11 @@ public class mRouter2 extends ActiveRouter {
 		return this.periods;
 	}
 
-	public List<DTNHost> getCurrentMessageCovered( Message m ){
-		List<DTNHost> coveredList = MessageCover.MessageCoverInfo.get(m);
+	public List<DTNHost> getCurrentMessageCovered( mRouter2 router, Message m ){
+		List<DTNHost> coveredList = router.MessageCoverInfo.get(m);
 		if( coveredList == null ) {
 			coveredList = new ArrayList<>();
-			MessageCover.MessageCoverInfo.put(m,coveredList);
+			router.MessageCoverInfo.put(m,coveredList);
 		}
 		return coveredList;
 	}
@@ -205,23 +207,19 @@ public class mRouter2 extends ActiveRouter {
 	public boolean otherRouterCanCoverMoreNodes( DTNHost othHost, mRouter2 othRouter , Message m ){
 		boolean result;
 		// Get self and others' DPs
+		updateCover(m);
 		List<DTNHost> othCover = getHostCurCover(othRouter,m);
-		List<DTNHost> selfCover = getHostCurCover(this,m);
-		List<DTNHost> curCover = getCurrentMessageCovered(m);
+		List<DTNHost> selfCover = MessageCoverInfo.get(m);
 
-		// If current cover or other cover is strong enough, we don't need to pass this message.
-		result = !curCover.containsAll(othCover) && !selfCover.containsAll(othCover);
+		result = !selfCover.containsAll(othCover);
 
 		if( result ){
-			//System.out.println("Pass by spreading factor!");
+			// After this connection, the covered node is now the merged list
+			List<DTNHost> afterCover = new ArrayList<>();
+			afterCover.addAll(othCover);
+			afterCover.addAll(selfCover);
+			MessageCoverInfo.put(m,afterCover);
 		}
-
-		// After this connection, the covered node is now the merged list
-		List<DTNHost> afterCover = new ArrayList<>();
-		afterCover.addAll(othCover);
-		afterCover.addAll(selfCover);
-		afterCover.addAll(curCover);
-		MessageCover.MessageCoverInfo.put(m,afterCover);
 
 		return result;
 	}
@@ -439,11 +437,18 @@ public class mRouter2 extends ActiveRouter {
 
 	/***/
 	private void updateCover( Message m ){
-		List<DTNHost> cur_cover = getCurrentMessageCovered(m);
+		List<DTNHost> cur_cover = getCurrentMessageCovered(this,m);
 		List<DTNHost> self_cover = getHostCurCover(this,m);
 
 		cur_cover.addAll(self_cover);
-		MessageCover.MessageCoverInfo.put(m,cur_cover);
+		MessageCoverInfo.put(m,cur_cover);
+	}
+
+	@Override
+	public boolean createNewMessage(Message m) {
+		updateCover(m);
+		makeRoomForNewMessage(m.getSize());
+		return super.createNewMessage(m);
 	}
 
 	public Map<DTNHost, Double> getAllPreds(){
@@ -622,12 +627,10 @@ public class mRouter2 extends ActiveRouter {
 		if (!canStartTransfer() ||isTransferring()) {
 			return; // nothing to transfer or is currently transferring 
 		}
-		
 		// try messages that could be delivered to final recipient
 		if (exchangeDeliverableMessages() != null) {
 			return;
 		}
-		
 		tryOtherMessages();		
 	}
 	
