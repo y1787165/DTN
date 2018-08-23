@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/DTNSim.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/DTNSim.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/DTNSim.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/util/MessageCover.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/util/MessageCover.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/util/MessageCover.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/util/MessageCover.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,12 +25,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="8576" />
+          <entry key="java" value="9622" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="8576" />
+          <entry key="JAVA" value="9622" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -58,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="392" column="59" selection-start-line="392" selection-start-column="59" selection-end-line="392" selection-end-column="59" />
+            <state relative-caret-position="398">
+              <caret line="555" column="7" lean-forward="true" selection-start-line="555" selection-start-column="7" selection-end-line="555" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2632#2775#0" />
@@ -74,14 +68,13 @@
                 <element signature="e#6433#6718#0" />
                 <element signature="e#7376#7377#0" expanded="true" />
                 <element signature="e#7388#7389#0" expanded="true" />
-                <element signature="e#10199#11851#0" />
-                <element signature="e#11804#12225#0" />
-                <element signature="e#12228#13083#0" />
-                <element signature="e#15026#15027#0" expanded="true" />
-                <element signature="e#15058#15059#0" expanded="true" />
+                <element signature="e#7544#7545#0" expanded="true" />
+                <element signature="e#7569#7570#0" expanded="true" />
+                <element signature="e#15606#15607#0" expanded="true" />
+                <element signature="e#15638#15639#0" expanded="true" />
                 <element signature="e#8938#8982#0" />
-                <element signature="e#15447#15448#0" expanded="true" />
-                <element signature="e#15497#15498#0" expanded="true" />
+                <element signature="e#16027#16028#0" expanded="true" />
+                <element signature="e#16077#16078#0" expanded="true" />
                 <element signature="e#10722#10877#0" />
                 <element signature="e#11451#11643#0" />
                 <element signature="e#12304#12537#0" />
@@ -108,8 +101,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routing/util/ActivePeriod.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+            <state relative-caret-position="88">
+              <caret line="21" column="25" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="25" />
               <folding>
                 <element signature="e#675#676#0" expanded="true" />
                 <element signature="e#701#702#0" expanded="true" />
@@ -148,14 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>routingTable</find>
-      <find>getActiveNodes</find>
-      <find>des</find>
-      <find>sim</find>
-      <find>period</find>
-      <find>contactIdicator</find>
-      <find>PeriodCalculation</find>
-      <find>DTNHost</find>
       <find>periodCalculation</find>
       <find>other.toString</find>
       <find>O_SIZE</find>
@@ -176,8 +161,16 @@
       <find>getPeriod</find>
       <find>updateMessageCovered</find>
       <find>entrySet</find>
-      <find>all_oth_period</find>
       <find>pass</find>
+      <find>update</find>
+      <find>IS_OBSERVE_END</find>
+      <find>periods</find>
+      <find>getOthPeriodInfo</find>
+      <find>remain</find>
+      <find>all_oth_period</find>
+      <find>period</find>
+      <find>all_oth_periods</find>
+      <find>upTimeTable</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -234,6 +227,17 @@
               <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="routing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="the-one-1.6.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="the-one-1.6.0" type="462c0819:PsiDirectoryNode" />
+              <item name="routing" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -246,7 +250,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535032752203" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535052525785" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -315,8 +319,8 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7804196" visible="true" weight="0.23859432" />
-      <window_info id="Structure" order="1" sideWeight="0.21958043" side_tool="true" visible="true" weight="0.23859432" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7806005" visible="true" weight="0.20468557" />
+      <window_info id="Structure" order="1" sideWeight="0.21939954" side_tool="true" visible="true" weight="0.20468557" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -332,7 +336,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" visible="true" weight="0.1743649" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.1743649" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -356,25 +360,25 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>735</line>
+          <line>739</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>573</line>
+          <line>577</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>741</line>
+          <line>745</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>752</line>
+          <line>756</line>
           <properties />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -463,19 +467,6 @@
         <state relative-caret-position="-726" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routing/util/ActivePeriod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-          <folding>
-            <element signature="e#675#676#0" expanded="true" />
-            <element signature="e#701#702#0" expanded="true" />
-            <element signature="e#736#737#0" expanded="true" />
-            <element signature="e#772#773#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routing/ActiveRouter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
@@ -546,10 +537,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routing/util/ActivePeriod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <element signature="e#675#676#0" expanded="true" />
+            <element signature="e#701#702#0" expanded="true" />
+            <element signature="e#736#737#0" expanded="true" />
+            <element signature="e#772#773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="392" column="59" selection-start-line="392" selection-start-column="59" selection-end-line="392" selection-end-column="59" />
+        <state relative-caret-position="398">
+          <caret line="555" column="7" lean-forward="true" selection-start-line="555" selection-start-column="7" selection-end-line="555" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2632#2775#0" />
@@ -564,14 +568,13 @@
             <element signature="e#6433#6718#0" />
             <element signature="e#7376#7377#0" expanded="true" />
             <element signature="e#7388#7389#0" expanded="true" />
-            <element signature="e#10199#11851#0" />
-            <element signature="e#11804#12225#0" />
-            <element signature="e#12228#13083#0" />
-            <element signature="e#15026#15027#0" expanded="true" />
-            <element signature="e#15058#15059#0" expanded="true" />
+            <element signature="e#7544#7545#0" expanded="true" />
+            <element signature="e#7569#7570#0" expanded="true" />
+            <element signature="e#15606#15607#0" expanded="true" />
+            <element signature="e#15638#15639#0" expanded="true" />
             <element signature="e#8938#8982#0" />
-            <element signature="e#15447#15448#0" expanded="true" />
-            <element signature="e#15497#15498#0" expanded="true" />
+            <element signature="e#16027#16028#0" expanded="true" />
+            <element signature="e#16077#16078#0" expanded="true" />
             <element signature="e#10722#10877#0" />
             <element signature="e#11451#11643#0" />
             <element signature="e#12304#12537#0" />

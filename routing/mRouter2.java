@@ -85,6 +85,10 @@ public class mRouter2 extends ActiveRouter {
 	private Map<DTNHost,Integer[][]> contactIdicator;
 	private Map<DTNHost,Boolean[]> period;
 	private Map<DTNHost,Map<DTNHost,Boolean[]>> all_oth_period;
+
+	private Map<DTNHost,List<ActivePeriod>> periods;
+	private Map<DTNHost,Map<DTNHost,List<ActivePeriod>>> all_oth_periods;
+
 	private int THRES_T = 5;	/** THRES_T x O_SIZE = THRES_T minutes */
 	private double THRHES_DP = 0.5;
 	private double THRES_RATIO = 0.2; /** Threshold that  */
@@ -151,6 +155,8 @@ public class mRouter2 extends ActiveRouter {
 		period = new HashMap<>();
 		all_oth_period = new HashMap<DTNHost,Map<DTNHost,Boolean[]> >();
 		contactIdicator = new HashMap<>();
+		periods = new HashMap<DTNHost,List<ActivePeriod>>();
+		all_oth_periods = new HashMap<>();
 	}
 
 	private void updateHistoryRoutingInformation() {
@@ -254,11 +260,8 @@ public class mRouter2 extends ActiveRouter {
 		return this.period;
 	}
 
-	// TODO: 2018/8/5 getActiveNodes in this period
-	public ArrayList<String> getActiveNodes(){
-		ArrayList<String> activeNodes = new ArrayList<>();
-
-		return activeNodes;
+	public Map<DTNHost,List<ActivePeriod>> getPeriods(){
+		return this.periods;
 	}
 
 	public List<DTNHost> getCurrentMessageCovered( Message m ){
@@ -280,23 +283,11 @@ public class mRouter2 extends ActiveRouter {
 		return cover;
 	}
 
-	private List<DTNHost> getStrongPeriod( Map<DTNHost,Boolean[]> p, Message m ){
+	private List<DTNHost> getStrongPeriod( mRouter2 router, Message m ){
 		List<DTNHost> cover = new ArrayList<>();
-		int cur_time = (int)(SimClock.getTime());
-
-		for( Map.Entry<DTNHost,Boolean[]> entry : p.entrySet() ){
-			DTNHost host = entry.getKey();
-			Boolean[] p_info = entry.getValue();
-			// In minute
-			int r_time = 0;
-			for( int i=cur_time ; i<p_info.length ; ++i ){
-				if( p_info[i] )
-					break;
-				++r_time;
-			}
-			if( r_time < m.getTtl() ){
+		for( DTNHost host : periods.keySet() ) {
+			if( timeRemain1Hop(router,host) < m.getTtl() )
 				cover.add(host);
-			}
 		}
 		return cover;
 	}
@@ -304,7 +295,7 @@ public class mRouter2 extends ActiveRouter {
 	private List<DTNHost> getHostCurCover( mRouter2 router, Message m ){
 		List<DTNHost> cur_cover = new ArrayList<>();
 		cur_cover.addAll( getStrongDP( router.getAllPreds()) );
-		cur_cover.addAll( getStrongPeriod( router.getPeriod(),m) );
+		cur_cover.addAll( getStrongPeriod( router,m) );
 		return cur_cover;
 	}
 
@@ -331,81 +322,84 @@ public class mRouter2 extends ActiveRouter {
 
 		return result;
 	}
-/*
-	private void updateMessageCovered( Message m ){
-		// Merge two covered lists
-		List<DTNHost> tmpActiveNodes = MessageCover.MessageCoverInfo.get(m);
-		List<String> activeNodes = this.getActiveNodes();
-
-		if( tmpActiveNodes!=null )
-			activeNodes.addAll(tmpActiveNodes);
-
-		// Reput the list to covered list
-		MessageCover.MessageCoverInfo.put(m.toString(),activeNodes);
-	}*/
-
-	// TODO : Check if the router is in active period
-	public boolean isInActivePeriod(){
-
-		return true;
-	}
 
 	public int timeRemain1Hop( mRouter2 router, DTNHost des ){
-		Boolean[] contactInfo = router.period.get(des);
+		List<ActivePeriod> contactInfo = router.periods.get(des);
 
-		if( contactInfo == null )
+		if( contactInfo==null )
 			return Integer.MAX_VALUE;
 
-		int time = (int)(SimClock.getTime());
+		int time = ((int)(SimClock.getTime()))%86400;
+		int min_r_time = Integer.MAX_VALUE;
 
-		for( int i=0 ; i<O_SIZE ; ++i ){
-			if( contactInfo[(i+time)%O_SIZE] )
-				return i;
+		for( ActivePeriod ap : contactInfo ){
+			int str = ap.getStr()*60; // To second
+			int end = ap.getEnd()*60;
+			int tom_str = str+86400;
+			int tom_end = end+86400;
+
+			if( str <= time && end > time )
+				return 0;
+			if( str >= time )
+				min_r_time = Math.min(min_r_time,str-time);
+			min_r_time = Math.min(min_r_time,tom_str-time);
 		}
 
-		return Integer.MAX_VALUE;
+		return min_r_time;
+	}
+
+	public int timeRemain1Hop( DTNHost from, DTNHost des,int time ){
+		mRouter2 router = (mRouter2) from.getRouter();
+		List<ActivePeriod> contactInfo = router.periods.get(des);
+
+		time %= 86400;
+		int min_r_time = Integer.MAX_VALUE;
+
+		for( ActivePeriod ap : contactInfo ){
+			int str = ap.getStr()*60; // To second
+			int end = ap.getEnd()*60;
+			int tom_str = str+86400;
+			int tom_end = end+86400;
+
+			if( str <= time && end > time )
+				return 0;
+			if( str >= time )
+				min_r_time = Math.min(min_r_time,str-time);
+			min_r_time = Math.min(min_r_time,tom_str-time);
+		}
+
+		return min_r_time;
 	}
 
 	public int timeRemain2Hop( DTNHost des, Message m ){
 		int total_num = 0;
 		int min_time = Integer.MAX_VALUE;
+		int r_time = 0;
+		int cur_time = (int)(SimClock.getTime());
 
-		/** Traverse the history other host period imformation*/
-		for( Map.Entry<DTNHost,Map<DTNHost,Boolean[]>> entry : all_oth_period.entrySet() ){
-			/**
-			 * 1. Find the DTNHost A that can be meet in ttl time
-			 * 2. Find the time that A can meet the des.
-			 * 3. Add up the time, if it < ttl , good.
-			 * */
+		// Traverse the history other host period imformation
+		for( Map.Entry<DTNHost,Map<DTNHost,List<ActivePeriod>>> entry : all_oth_periods.entrySet() ){
+			//
+			// 1. Find the DTNHost A that can be meet in ttl time
+			// 2. Find the time that A can meet the des.
+			// 3. Add up the time, if it < ttl , good.
+			//
 			DTNHost host = entry.getKey();
-			Boolean[] hop_1_period = period.get(host);
-			/** If there is no period between self and the host, it's not gonna be useful */
+			List<ActivePeriod> hop_1_period = periods.get(host);
+			// If there is no period between self and the host, it's not gonna be useful
 			if( hop_1_period==null )
 				continue;
-			int cur_time = (int)(SimClock.getTime());
-			int r_time = 0;
-			/** Calculate the remain time that can meet the host */
-			for( int i=0 ; i<O_SIZE ; ++i  ){
-				if( hop_1_period[(i+cur_time)%O_SIZE] )
-					break;
-				++r_time;
-			}
-			/** If the time that meets the host will exceed the ttl, give up */
+			r_time = timeRemain1Hop(this,host);
+
+			// If the time that meets the host will exceed the ttl, give up
 			if( m.getTtl() < r_time )
 				continue;
-			/** Now calculate the time between a certain host to contact with destination
-			 * 	Because we shuold meet the node before the node meets des, so add the r+time to cur_time
-			 * */
+			// Now calculate the time between a certain host to contact with destination
+			// Because we shuold meet the node before the node meets des, so add the r+time to cur_time
+			//
 			cur_time += r_time;
-			Map<DTNHost,Boolean[]> p_info = entry.getValue();
-			Boolean[] to_des = p_info.get(des);
-			if( to_des==null )
-				continue;
-			for( int i=0 ; i<O_SIZE ; ++i ){
-				if( to_des[(i+cur_time)%O_SIZE] )
-					break;
-				++r_time;
-			}
+			r_time += timeRemain1Hop(host,des,cur_time);
+
 			if( m.getTtl() > r_time ){
 				min_time = Math.min( min_time,r_time );
 				++total_num;
@@ -429,6 +423,7 @@ public class mRouter2 extends ActiveRouter {
 		Integer[][] periInfo = contactIdicator.get(des);
 		int[] judge_arr = new int[O_SIZE];
 		Boolean[] put_to_p_info = new Boolean[O_SIZE];
+		//Map<DTNHost,List<ActivePeriod>> periods;
 
 		/** Initialized the array */
 		for( int i=0 ; i<O_SIZE ; ++i ){
@@ -467,17 +462,19 @@ public class mRouter2 extends ActiveRouter {
 				else {
 					// If so, mark the period and put it into period Map
 					if( isPeriod(judge_arr,str,pre) ) {
-						for (int j=str; j<pre; ++j) {
-							put_to_p_info[j] = true;
-						}
-						period.put(des,put_to_p_info);
+						ActivePeriod activePeriod = new ActivePeriod(str,pre);
+						List<ActivePeriod> to_put = periods.get(des);
+						if( to_put==null )
+							to_put = new ArrayList<>();
+						to_put.add(activePeriod);
+						periods.put(des,to_put);
 					}
 					str = pre = i;
 				}
 			}
 		}
 
-		/** The code under this line is to check the period works or not*/
+		/** The code under this line is to check the period works or not
 		Boolean[] for_debug = period.get(des);
 		if( for_debug==null )
 			System.out.println("No Period");
@@ -488,7 +485,7 @@ public class mRouter2 extends ActiveRouter {
 				}
 			}
 			System.out.println("");
-		}
+		}*/
 	}
 
 	private boolean isPeriod( int[] judge_arr,int str,int end ){
@@ -549,14 +546,21 @@ public class mRouter2 extends ActiveRouter {
 	public Map<DTNHost, Double> getAllPreds(){
 		return getDeliveryPreds();
 	}
-
+/*
 	private void updateOthPeriodInfo(DTNHost other){
 		mRouter2 othRouter = (mRouter2)other.getRouter();
 		Map<DTNHost,Boolean[]> oth_periods = othRouter.getPeriod();
 		if( oth_periods==null )
 			oth_periods = new HashMap<DTNHost,Boolean[]>();
-
 		all_oth_period.put(other,oth_periods);
+	}*/
+
+	private void updateOthPeriodInfo(DTNHost other){
+		mRouter2 othRouter = (mRouter2)other.getRouter();
+		Map<DTNHost,List<ActivePeriod>> oth_periods = othRouter.getPeriods();
+		if( oth_periods==null )
+			oth_periods = new HashMap<DTNHost,List<ActivePeriod>>();
+		all_oth_periods.put(other,oth_periods);
 	}
 
 	/** Above is mRouter */
@@ -594,11 +598,11 @@ public class mRouter2 extends ActiveRouter {
 			// Record the start time
 			upTimeTable.put( other , time );
 			// Update the contact number when a contact occurs.
-			updateContactNumbers(other);
-			updateGlobalContactNumbers(self);
+			//updateContactNumbers(other);
+			//updateGlobalContactNumbers(self);
 
 			// Check the list of neighbors of the new connected node
-			List<Connection> cs = getOtherNodeCurrentConnectionList(other);
+			// List<Connection> cs = getOtherNodeCurrentConnectionList(other);
 
 			// Update the period information
 			updateOthPeriodInfo(other);
@@ -613,8 +617,8 @@ public class mRouter2 extends ActiveRouter {
 			System.out.println( "Total time in this contact " + (downTime-upTime));*/
 
 			// Update the time when a contact is down.
-			updateContactTime( other , (downTime-upTime) );
-			updateGlobalContactTime( self );
+			//updateContactTime( other , (downTime-upTime) );
+			//updateGlobalContactTime( self );
 
 			// If is in observe time
 			if( !IS_OBSERVE_END ) {
