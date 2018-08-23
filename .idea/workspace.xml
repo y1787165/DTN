@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8b5a6e1-7254-45a2-9375-bd164dc083d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2$TupleComparator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/mRouter2.class" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/TestDefaultPro/TestDefaultMRouter_MessageStatsReport.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reports/TestDefaultPro/TestDefaultMRouter_MessageStatsReport.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routing/mRouter2.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing/mRouter2.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,12 +23,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="9622" />
+          <entry key="java" value="9623" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="9622" />
+          <entry key="JAVA" value="9623" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -52,27 +50,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="555" column="7" lean-forward="true" selection-start-line="555" selection-start-column="7" selection-end-line="555" selection-end-column="7" />
+            <state relative-caret-position="408">
+              <caret line="605" column="8" lean-forward="true" selection-start-line="605" selection-start-column="8" selection-end-line="605" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2632#2775#0" />
                 <element signature="e#3180#3280#0" />
                 <element signature="e#3180#3509#0" />
-                <element signature="e#3911#4111#0" />
-                <element signature="e#4114#4572#0" />
-                <element signature="e#4575#4995#0" />
-                <element signature="e#4998#5435#0" />
-                <element signature="e#5438#5753#0" />
-                <element signature="e#5756#6069#0" />
-                <element signature="e#6433#6718#0" />
                 <element signature="e#7376#7377#0" expanded="true" />
                 <element signature="e#7388#7389#0" expanded="true" />
                 <element signature="e#7544#7545#0" expanded="true" />
                 <element signature="e#7569#7570#0" expanded="true" />
                 <element signature="e#15606#15607#0" expanded="true" />
                 <element signature="e#15638#15639#0" expanded="true" />
-                <element signature="e#8938#8982#0" />
                 <element signature="e#16027#16028#0" expanded="true" />
                 <element signature="e#16077#16078#0" expanded="true" />
                 <element signature="e#10722#10877#0" />
@@ -250,7 +240,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535052525785" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535052917363" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -360,25 +350,25 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>739</line>
+          <line>614</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>577</line>
+          <line>471</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>745</line>
+          <line>620</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/routing/mRouter2.java</url>
-          <line>756</line>
+          <line>631</line>
           <properties />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -552,27 +542,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routing/mRouter2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="555" column="7" lean-forward="true" selection-start-line="555" selection-start-column="7" selection-end-line="555" selection-end-column="7" />
+        <state relative-caret-position="408">
+          <caret line="605" column="8" lean-forward="true" selection-start-line="605" selection-start-column="8" selection-end-line="605" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2632#2775#0" />
             <element signature="e#3180#3280#0" />
             <element signature="e#3180#3509#0" />
-            <element signature="e#3911#4111#0" />
-            <element signature="e#4114#4572#0" />
-            <element signature="e#4575#4995#0" />
-            <element signature="e#4998#5435#0" />
-            <element signature="e#5438#5753#0" />
-            <element signature="e#5756#6069#0" />
-            <element signature="e#6433#6718#0" />
             <element signature="e#7376#7377#0" expanded="true" />
             <element signature="e#7388#7389#0" expanded="true" />
             <element signature="e#7544#7545#0" expanded="true" />
             <element signature="e#7569#7570#0" expanded="true" />
             <element signature="e#15606#15607#0" expanded="true" />
             <element signature="e#15638#15639#0" expanded="true" />
-            <element signature="e#8938#8982#0" />
             <element signature="e#16027#16028#0" expanded="true" />
             <element signature="e#16077#16078#0" expanded="true" />
             <element signature="e#10722#10877#0" />

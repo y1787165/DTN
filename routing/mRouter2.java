@@ -159,103 +159,6 @@ public class mRouter2 extends ActiveRouter {
 		all_oth_periods = new HashMap<>();
 	}
 
-	private void updateHistoryRoutingInformation() {
-
-		for (Connection con : getConnections()) {
-			DTNHost other = con.getOtherNode(getHost());
-			mRouter othRouter = (mRouter)other.getRouter();
-		}
-
-	}
-
-	public void testMessageInformation() {
-
-		ArrayList<Message> messages = new ArrayList<Message>();
-		messages.addAll(getMessageCollection());
-
-		// Test the hop node of a message, but the same node repeatly appear.
-
-		/*
-		for( Message m : messages ) {
-			ArrayList<DTNHost> hosts = new ArrayList<DTNHost>();
-			hosts.addAll(m.getHops());
-
-			for( DTNHost host : hosts ) {
-				System.out.println( host.toString());
-			}
-			System.out.println("-");
-		}
-		*/
-	}
-
-	// Currently not used
-	private void updateContactNumbers(DTNHost otherHost) {
-
-		if( contactNumberTable.containsKey(otherHost) )
-			contactNumberTable.put( otherHost, contactNumberTable.get(otherHost)+1 );
-		else
-			contactNumberTable.put( otherHost, 1 );
-
-		// Print contact number message to check whether it can work, it works now.
-		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
-	}
-
-	// Currently not used
-	private void updateContactTime(DTNHost otherHost, double time){
-
-		if( contactTimeTable.containsKey(otherHost) )
-			contactTimeTable.put( otherHost, contactTimeTable.get(otherHost)+time );
-		else
-			contactTimeTable.put( otherHost, time );
-
-		// Print accumalated time message to check whether it can work, it works now.
-		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
-	}
-
-	// Currently not used
-	private void updateGlobalContactNumbers(DTNHost self) {
-
-		AllContactTime.allContactNumberList.put( self,contactNumberTable  );
-
-		// Print contact number message to check whether it can work, it works now.
-		// System.out.println("Contact number :" + otherHost.toString()+" "+contactNumberTable.get(otherHost));
-	}
-
-	// Currently not used
-	private void updateGlobalContactTime(DTNHost self){
-
-		AllContactTime.allContactList.put( self, contactTimeTable );
-
-		// Print accumalated time message to check whether it can work, it works now.
-		// System.out.println("Contact time accumalated :" + otherHost.toString()+" "+contactTimeTable.get(otherHost));
-	}
-
-	// Currently not used
-	private Map<DTNHost, Integer> getContactTable() {
-		return this.contactNumberTable;
-	}
-
-	private List<Connection> getOtherNodeCurrentConnectionList( DTNHost other ){
-		/* Print the connect message
-		System.out.println("The node currently connects to " );
-		for ( Connection other_con : other.getConnections() ) {
-			System.out.printf( other_con.getOtherNode(other).toString() );
-		}
-		System.out.println("");*/
-
-		return other.getConnections();
-	}
-
-	private void updateRoutingInfo(DTNHost otherHost) {
-		MessageRouter otherRouter = otherHost.getRouter();
-
-		Map<DTNHost, Integer> otherContactTable =
-				((mRouter2)otherRouter).getContactTable();
-
-		if( otherContactTable != null  )
-			routingTable.put(otherHost,otherContactTable);
-	}
-
 	public Map<DTNHost,Boolean[]> getPeriod(){
 		return this.period;
 	}
@@ -546,15 +449,6 @@ public class mRouter2 extends ActiveRouter {
 	public Map<DTNHost, Double> getAllPreds(){
 		return getDeliveryPreds();
 	}
-/*
-	private void updateOthPeriodInfo(DTNHost other){
-		mRouter2 othRouter = (mRouter2)other.getRouter();
-		Map<DTNHost,Boolean[]> oth_periods = othRouter.getPeriod();
-		if( oth_periods==null )
-			oth_periods = new HashMap<DTNHost,Boolean[]>();
-		all_oth_period.put(other,oth_periods);
-	}*/
-
 	private void updateOthPeriodInfo(DTNHost other){
 		mRouter2 othRouter = (mRouter2)other.getRouter();
 		Map<DTNHost,List<ActivePeriod>> oth_periods = othRouter.getPeriods();
@@ -597,28 +491,12 @@ public class mRouter2 extends ActiveRouter {
 
 			// Record the start time
 			upTimeTable.put( other , time );
-			// Update the contact number when a contact occurs.
-			//updateContactNumbers(other);
-			//updateGlobalContactNumbers(self);
-
-			// Check the list of neighbors of the new connected node
-			// List<Connection> cs = getOtherNodeCurrentConnectionList(other);
-
 			// Update the period information
 			updateOthPeriodInfo(other);
 		}
 		else {
 			Double downTime = time;
 			Double upTime = upTimeTable.get(other);
-			/*
-			System.out.println( "Connection down at:"+downTime );
-			System.out.println( "from node " + self.toString());
-			System.out.println( "to node " + other.toString());
-			System.out.println( "Total time in this contact " + (downTime-upTime));*/
-
-			// Update the time when a contact is down.
-			//updateContactTime( other , (downTime-upTime) );
-			//updateGlobalContactTime( self );
 
 			// If is in observe time
 			if( !IS_OBSERVE_END ) {
@@ -642,9 +520,6 @@ public class mRouter2 extends ActiveRouter {
 							which_day = 3;
 							IS_OBSERVE_END = true;
 						}
-						//System.out.println(tmp+" "+which_day+" "+tmp%O_SIZE);
-						/*if( toUpdate==null )
-							System.out.println("Fuck you");*/
 						toUpdate[which_day][tmp%O_SIZE]++;
 					}
 					// Put the latest information to contactIndicator
@@ -872,9 +747,7 @@ public class mRouter2 extends ActiveRouter {
 		if (recvCheck != RCV_OK) {
 			return recvCheck;
 		}
-
 		// seems OK, start receiving the message
 		return super.receiveMessage(m, from);
 	}
-
 }
