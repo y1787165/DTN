@@ -169,14 +169,14 @@ public class mRouter2 extends ActiveRouter {
 		return this.periods;
 	}
 
-	public List<DTNHost> getCurrentMessageCovered( mRouter2 router, Message m ){
+	/*public List<DTNHost> getCurrentMessageCovered( mRouter2 router, Message m ){
 		List<DTNHost> coveredList = router.MessageCoverInfo.get(m);
 		if( coveredList == null ) {
 			coveredList = new ArrayList<>();
 			router.MessageCoverInfo.put(m,coveredList);
 		}
 		return coveredList;
-	}
+	}*/
 
 	private List<DTNHost> getStrongDP( Map<DTNHost,Double> preds ){
 		List<DTNHost> cover = new ArrayList<>();
@@ -209,16 +209,16 @@ public class mRouter2 extends ActiveRouter {
 		// Get self and others' DPs
 		updateCover(m);
 		List<DTNHost> othCover = getHostCurCover(othRouter,m);
-		List<DTNHost> selfCover = MessageCoverInfo.get(m);
+		List<DTNHost> selfCover = getHostCurCover(this,m);
 
 		result = !selfCover.containsAll(othCover);
 
 		if( result ){
 			// After this connection, the covered node is now the merged list
-			List<DTNHost> afterCover = new ArrayList<>();
+			/*List<DTNHost> afterCover = new ArrayList<>();
 			afterCover.addAll(othCover);
 			afterCover.addAll(selfCover);
-			MessageCoverInfo.put(m,afterCover);
+			MessageCoverInfo.put(m,afterCover);*/
 		}
 
 		return result;
@@ -252,6 +252,9 @@ public class mRouter2 extends ActiveRouter {
 	public int timeRemain1Hop( DTNHost from, DTNHost des,int time ){
 		mRouter2 router = (mRouter2) from.getRouter();
 		List<ActivePeriod> contactInfo = router.periods.get(des);
+
+		if( contactInfo==null )
+			return Integer.MAX_VALUE;
 
 		time %= 86400;
 		int min_r_time = Integer.MAX_VALUE;
@@ -435,13 +438,21 @@ public class mRouter2 extends ActiveRouter {
 		return all_period_info;
 	}
 
+	private void cleanMessageMap(){
+		/*for( Message key : MessageCoverInfo.keySet() ){
+			if( key.getTtl() <= 0 )
+				MessageCoverInfo.remove(key);
+		}*/
+	}
+
 	/***/
 	private void updateCover( Message m ){
-		List<DTNHost> cur_cover = getCurrentMessageCovered(this,m);
+
+		/*List<DTNHost> cur_cover = getCurrentMessageCovered(this,m);
 		List<DTNHost> self_cover = getHostCurCover(this,m);
 
 		cur_cover.addAll(self_cover);
-		MessageCoverInfo.put(m,cur_cover);
+		MessageCoverInfo.put(m,cur_cover);*/
 	}
 
 	@Override
@@ -487,6 +498,7 @@ public class mRouter2 extends ActiveRouter {
 		double time = SimClock.getTime();
 
 		if (con.isUp()) {
+			cleanMessageMap();
 
 			// Prophet router
 			DTNHost otherHost = con.getOtherNode(getHost());
