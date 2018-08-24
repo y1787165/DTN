@@ -51,8 +51,9 @@ public class Message implements Comparable<Message> {
 	private Map<String, Object> properties;
 	
 	/** Application ID of the application that created the message */
-	private String	appID;
-	
+	private String appID;
+	private int relayedNum;
+
 	static {
 		reset();
 		DTNSim.registerForReset(Message.class.getCanonicalName());
@@ -81,6 +82,7 @@ public class Message implements Comparable<Message> {
 		this.requestMsg = null;
 		this.properties = null;
 		this.appID = null;
+		this.relayedNum = 0;
 		
 		/** Customed action */
 		this.covered_community = new ArrayList<String>();
@@ -374,5 +376,16 @@ public class Message implements Comparable<Message> {
 	public void setAppID(String appID) {
 		this.appID = appID;
 	}
-	
+
+
+	/**
+	 *  Custom
+	 */
+	public void addRelayedNum(){
+		this.relayedNum++;
+	}
+
+	public int getRelayedNum(){
+		return this.relayedNum;
+	}
 }

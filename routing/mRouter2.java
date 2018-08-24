@@ -170,15 +170,6 @@ public class mRouter2 extends ActiveRouter {
 		return this.periods;
 	}
 
-	/*public List<DTNHost> getCurrentMessageCovered( mRouter2 router, Message m ){
-		List<DTNHost> coveredList = router.MessageCoverInfo.get(m);
-		if( coveredList == null ) {
-			coveredList = new ArrayList<>();
-			router.MessageCoverInfo.put(m,coveredList);
-		}
-		return coveredList;
-	}*/
-
 	private List<DTNHost> getStrongDP( Map<DTNHost,Double> preds ){
 		List<DTNHost> cover = new ArrayList<>();
 		for( Map.Entry<DTNHost,Double> entry : preds.entrySet() ){
@@ -225,6 +216,7 @@ public class mRouter2 extends ActiveRouter {
 		return result;
 	}
 
+	// In second
 	public int timeRemain1Hop( mRouter2 router, DTNHost des ){
 		List<ActivePeriod> contactInfo = router.periods.get(des);
 
@@ -676,16 +668,19 @@ public class mRouter2 extends ActiveRouter {
 				// DP value
 				if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) && othRouter.getPredFor(m.getTo()) >= THRHES_DP  ) {
 					// the other node has higher probability of delivery
+					m.addRelayedNum();
 					messages.add(new Tuple<Message, Connection>(m,con));
 					++Statistics.PASS_BY_DP;
 				}
 				// Period information
 				else if ( othRouterHasBetterPeriod(other,othRouter,m)) {
+					m.addRelayedNum();
 					messages.add(new Tuple<Message, Connection>(m,con));
 					++Statistics.PASS_BY_PERIOD;
 				}
 				// Spreading ability
 				else if ( otherRouterCanCoverMoreNodes(other,othRouter,m) ) {
+					m.addRelayedNum();
 					messages.add(new Tuple<Message, Connection>(m,con));
 					++Statistics.PASS_BY_CENTRALITY;
 				}
@@ -768,5 +763,43 @@ public class mRouter2 extends ActiveRouter {
 		}
 		// seems OK, start receiving the message
 		return super.receiveMessage(m, from);
+	}
+
+	@Override
+	protected Message getNextMessageToRemove(boolean excludeMsgBeingSent) {
+		Collection<Message> messages = this.getMessageCollection();
+		Message lowest = null;
+		double util = 0;
+		double min = Integer.MAX_VALUE;
+		for (Message m : messages) {
+			if (excludeMsgBeingSent && isSending(m.getId())) {
+				continue; // skip the message(s) that router is sending
+			}
+			if( m.getTtl()<=0 )
+				return m;
+			if (lowest == null ) {
+				lowest = m;
+			}
+			else if ( !isPeriodMessage(m) ){
+				int relayed_num = m.getRelayedNum();
+				double dp = getPredFor(m.getTo());
+				double ttl_nor = m.getTtl()*1.0/msgTtl;
+				double r_num_nor = (6-m.getRelayedNum())*1.0/6;
+				if( relayed_num > 6 ) {
+					util = (1-dp)*(1-ttl_nor)*r_num_nor;
+				}
+				else
+					util = dp*ttl_nor*r_num_nor;
+				if( min > util ) {
+					min = util;
+					lowest = m;
+				}
+			}
+		}
+		return lowest;
+	}
+
+	public boolean isPeriodMessage(Message m){
+		return timeRemain1Hop(this, m.getTo()) < m.getTtl()*60;
 	}
 }
