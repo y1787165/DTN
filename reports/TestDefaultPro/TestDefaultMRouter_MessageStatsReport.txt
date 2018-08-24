@@ -1,0 +1,23 @@
+Message stats for scenario TestDefaultMRouter
+sim_time: 43200.1000
+created: 1461
+started: 52129
+relayed: 24838
+aborted: 27290
+dropped: 25104
+removed: 0
+delivered: 269
+delivery_prob: 0.1841
+response_prob: 0.0000
+overhead_ratio: 91.3346
+latency_avg: 4612.6799
+latency_med: 3415.4000
+hopcount_avg: 3.4387
+hopcount_med: 3
+buffertime_avg: 1494.1528
+buffertime_med: 966.6000
+rtt_avg: NaN
+rtt_med: NaN
+DP: 104100
+Period: 0
+Cen: 212312

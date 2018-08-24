@@ -13,9 +13,6 @@ import core.DTNHost;
 import core.Message;
 import core.MessageListener;
 
-import report.Statistics;
-
-
 /**
  * Report for generating different kind of total statistics about message
  * relaying performance. Messages that were created during the warm up period
@@ -24,7 +21,7 @@ import report.Statistics;
  * overhead ratio if no messages were delivered) "NaN" is reported for
  * double values and zero for integer median(s).
  */
-public class MessageStatsReport extends Report implements MessageListener {
+public class mMessageStatsReport extends Report implements MessageListener {
 	private Map<String, Double> creationTimes;
 	private List<Double> latencies;
 	private List<Integer> hopCounts;
@@ -40,11 +37,14 @@ public class MessageStatsReport extends Report implements MessageListener {
 	private int nrofResponseReqCreated;
 	private int nrofResponseDelivered;
 	private int nrofDelivered;
+
+	private int Dp,Cen,Period;
+
 	
 	/**
 	 * Constructor.
 	 */
-	public MessageStatsReport() {
+	public mMessageStatsReport() {
 		init();
 	}
 
@@ -66,6 +66,7 @@ public class MessageStatsReport extends Report implements MessageListener {
 		this.nrofResponseReqCreated = 0;
 		this.nrofResponseDelivered = 0;
 		this.nrofDelivered = 0;
+		this.Dp = this.Cen = this.Period = 0;
 	}
 
 	
@@ -92,6 +93,7 @@ public class MessageStatsReport extends Report implements MessageListener {
 		
 		this.nrofAborted++;
 	}
+
 	
 	public void messageTransferred(Message m, DTNHost from, DTNHost to,
 			boolean finalTarget) {
@@ -173,10 +175,7 @@ public class MessageStatsReport extends Report implements MessageListener {
 			"\nbuffertime_avg: " + getAverage(this.msgBufferTime) +
 			"\nbuffertime_med: " + getMedian(this.msgBufferTime) +
 			"\nrtt_avg: " + getAverage(this.rtt) +
-			"\nrtt_med: " + getMedian(this.rtt) +
-			"\nDP: " + Statistics.PASS_BY_DP +
-			"\nPeriod: " + Statistics.PASS_BY_PERIOD +
-			"\nCen: " + Statistics.PASS_BY_CENTRALITY
+			"\nrtt_med: " + getMedian(this.rtt)
 			;
 		
 		write(statsText);

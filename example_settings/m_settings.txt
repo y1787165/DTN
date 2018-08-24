@@ -5,7 +5,7 @@
 ## Reports - all report names have to be valid report classes
 # how many reports to load
 Report.nrofReports = 1
-Report.reportDir = reports/TestDefaultPro
+Report.reportDir = reports/TestDefaultEpi
 # Report classes to load
 Report.report1 = MessageStatsReport
 
@@ -15,6 +15,6 @@ Report.report1 = MessageStatsReport
 Optimization.cellSizeMult = 5
 Optimization.randomizeUpdateOrder = true
 
-Scenario.name = TestDefaultMRouter
-Group.router = mRouter2
+Scenario.name = TestDefaultEpi
+Group.router = EpidemicRouter
 

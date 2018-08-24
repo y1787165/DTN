@@ -34,6 +34,7 @@ import core.DTNHost;
 import core.Message;
 import core.Settings;
 import core.SimClock;
+import report.Statistics;
 
 /**
  * Implementation of PRoPHET router as described in 
@@ -676,14 +677,17 @@ public class mRouter2 extends ActiveRouter {
 				if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) && othRouter.getPredFor(m.getTo()) >= THRHES_DP  ) {
 					// the other node has higher probability of delivery
 					messages.add(new Tuple<Message, Connection>(m,con));
+					++Statistics.PASS_BY_DP;
 				}
 				// Period information
 				else if ( othRouterHasBetterPeriod(other,othRouter,m)) {
 					messages.add(new Tuple<Message, Connection>(m,con));
+					++Statistics.PASS_BY_PERIOD;
 				}
 				// Spreading ability
 				else if ( otherRouterCanCoverMoreNodes(other,othRouter,m) ) {
 					messages.add(new Tuple<Message, Connection>(m,con));
+					++Statistics.PASS_BY_CENTRALITY;
 				}
 			}			
 		}

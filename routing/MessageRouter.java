@@ -342,7 +342,6 @@ public abstract class MessageRouter {
 		boolean isFinalRecipient;
 		boolean isFirstDelivery; // is this first delivered instance of the msg
 		
-		
 		if (incoming == null) {
 			throw new SimError("No message with ID " + id + " in the incoming "+
 					"buffer of " + this.host);
