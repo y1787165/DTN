@@ -1,6 +1,6 @@
-/* 
+/*
  * Copyright 2010 Aalto University, ComNet
- * Released under GPLv3. See LICENSE.txt for details. 
+ * Released under GPLv3. See LICENSE.txt for details.
  */
 package routing;
 
@@ -48,15 +48,15 @@ public class mRouter2 extends ActiveRouter {
 	public static final double DEFAULT_BETA = 0.25;
 	/** delivery predictability aging constant */
 	public static final double GAMMA = 0.98;
-	
-	/** Prophet router's setting namespace ({@value})*/ 
+
+	/** Prophet router's setting namespace ({@value})*/
 	public static final String PROPHET_NS = "ProphetRouter";
 	/**
 	 * Number of seconds in time unit -setting id ({@value}).
 	 * How many seconds one time unit is when calculating aging of 
 	 * delivery predictions. Should be tweaked for the scenario.*/
 	public static final String SECONDS_IN_UNIT_S ="secondsInTimeUnit";
-	
+
 	/**
 	 * Transitivity scaling constant (beta) -setting id ({@value}).
 	 * Default value for setting is {@link #DEFAULT_BETA}.
@@ -92,8 +92,9 @@ public class mRouter2 extends ActiveRouter {
 	public Map<Message,List<DTNHost>> MessageCoverInfo;
 
 	private int THRES_T = 5;	/** THRES_T x O_SIZE = THRES_T minutes */
-	private double THRHES_DP = 0.5;
+	private double THRHES_DP = 0.3;
 	private double THRES_RATIO = 0.2; /** Threshold that  */
+	private double THRHES_DP_CEN = 0.5;
 	private boolean IS_OBSERVE_END = false;
 
 	/** These parameters are for debug */
@@ -127,7 +128,7 @@ public class mRouter2 extends ActiveRouter {
 		//
 
 		// mRouter
-		init();
+		m_init();
 		//System.out.println("Use s constructor");
 	}
 
@@ -145,11 +146,16 @@ public class mRouter2 extends ActiveRouter {
 		//
 
 		// mRouter
-		init();
+		m_init();
 		//System.out.println("User r counstructor");
 	}
 
-	private void init(){
+	public void test(){
+
+	}
+
+	private void m_init(){
+		test();
 		contactNumberTable = new HashMap<DTNHost, Integer>();
 		routingTable = new HashMap<DTNHost, Map<DTNHost, Integer>>();
 		contactTimeTable = new HashMap<DTNHost, Double>();
@@ -173,7 +179,7 @@ public class mRouter2 extends ActiveRouter {
 	private List<DTNHost> getStrongDP( Map<DTNHost,Double> preds ){
 		List<DTNHost> cover = new ArrayList<>();
 		for( Map.Entry<DTNHost,Double> entry : preds.entrySet() ){
-			if( entry.getValue() > THRHES_DP ){
+			if( entry.getValue() > THRHES_DP_CEN ){
 				cover.add(entry.getKey());
 			}
 		}
@@ -313,7 +319,7 @@ public class mRouter2 extends ActiveRouter {
 		int r2Hop = this.timeRemain2Hop(des,m);
 		int r2HopOth = othRouter.timeRemain2Hop(des,m);
 
-		return ( r1Hop > r1HopOth || r1Hop > r2HopOth || r2Hop > r2HopOth );
+		return ( r1Hop>r1HopOth  || r1Hop > r2HopOth || r2Hop > r2HopOth );
 	}
 
 	private void periodCalculation( DTNHost des ){
@@ -372,17 +378,17 @@ public class mRouter2 extends ActiveRouter {
 		}
 
 		/** The code under this line is to check the period works or not
-		Boolean[] for_debug = period.get(des);
-		if( for_debug==null )
-			System.out.println("No Period");
-		else {
-			for (int i = 0; i < for_debug.length; ++i) {
-				if (for_debug[i]) {
-					System.out.printf(i + " ");
-				}
-			}
-			System.out.println("");
-		}*/
+		 Boolean[] for_debug = period.get(des);
+		 if( for_debug==null )
+		 System.out.println("No Period");
+		 else {
+		 for (int i = 0; i < for_debug.length; ++i) {
+		 if (for_debug[i]) {
+		 System.out.printf(i + " ");
+		 }
+		 }
+		 System.out.println("");
+		 }*/
 	}
 
 	private boolean isPeriod( int[] judge_arr,int str,int end ){
@@ -552,7 +558,7 @@ public class mRouter2 extends ActiveRouter {
 		double newValue = oldValue + (1 - oldValue) * P_INIT;
 		preds.put(host, newValue);
 	}
-	
+
 	/**
 	 * Returns the current prediction (P) value for a host or 0 if entry for
 	 * the host doesn't exist.
@@ -568,7 +574,7 @@ public class mRouter2 extends ActiveRouter {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Updates transitive (A->B->C) delivery predictions.
 	 * <CODE>P(a,c) = P(a,c)_old + (1 - P(a,c)_old) * P(a,b) * P(b,c) * BETA
@@ -577,18 +583,18 @@ public class mRouter2 extends ActiveRouter {
 	 */
 	private void updateTransitivePreds(DTNHost host) {
 		MessageRouter otherRouter = host.getRouter();
-		assert otherRouter instanceof ProphetRouter : "PRoPHET only works " + 
-			" with other routers of same type";
-		
+		assert otherRouter instanceof ProphetRouter : "PRoPHET only works " +
+				" with other routers of same type";
+
 		double pForHost = getPredFor(host); // P(a,b)
-		Map<DTNHost, Double> othersPreds = 
-			((mRouter2)otherRouter).getDeliveryPreds();
-		
+		Map<DTNHost, Double> othersPreds =
+				((mRouter2)otherRouter).getDeliveryPreds();
+
 		for (Map.Entry<DTNHost, Double> e : othersPreds.entrySet()) {
 			if (e.getKey() == getHost()) {
 				continue; // don't add yourself
 			}
-			
+
 			double pOld = getPredFor(e.getKey()); // P(a,c)_old
 			double pNew = pOld + ( 1 - pOld) * pForHost * e.getValue() * beta;
 			preds.put(e.getKey(), pNew);
@@ -602,21 +608,21 @@ public class mRouter2 extends ActiveRouter {
 	 * @see #SECONDS_IN_UNIT_S
 	 */
 	private void ageDeliveryPreds() {
-		double timeDiff = (SimClock.getTime() - this.lastAgeUpdate) / 
-			secondsInTimeUnit;
-		
+		double timeDiff = (SimClock.getTime() - this.lastAgeUpdate) /
+				secondsInTimeUnit;
+
 		if (timeDiff == 0) {
 			return;
 		}
-		
+
 		double mult = Math.pow(GAMMA, timeDiff);
 		for (Map.Entry<DTNHost, Double> e : preds.entrySet()) {
 			e.setValue(e.getValue()*mult);
 		}
-		
+
 		this.lastAgeUpdate = SimClock.getTime();
 	}
-	
+
 	/**
 	 * Returns a map of this router's delivery predictions
 	 * @return a map of this router's delivery predictions
@@ -625,72 +631,93 @@ public class mRouter2 extends ActiveRouter {
 		ageDeliveryPreds(); // make sure the aging is done
 		return this.preds;
 	}
-	
+
 	@Override
 	public void update() {
 		super.update();
 		if (!canStartTransfer() ||isTransferring()) {
-			return; // nothing to transfer or is currently transferring 
+			return; // nothing to transfer or is currently transferring
 		}
 		// try messages that could be delivered to final recipient
 		if (exchangeDeliverableMessages() != null) {
 			return;
 		}
-		tryOtherMessages();		
+		tryOtherMessages();
 	}
-	
+
 	/**
 	 * Tries to send all other messages to all connected hosts ordered by
 	 * their delivery probability
 	 * @return The return value of {@link #tryMessagesForConnected(List)}
 	 */
 	private Tuple<Message, Connection> tryOtherMessages() {
-		List<Tuple<Message, Connection>> messages = 
-			new ArrayList<Tuple<Message, Connection>>(); 
-	
+		List<Tuple<Message, Connection>> messages =
+				new ArrayList<Tuple<Message, Connection>>();
+
 		Collection<Message> msgCollection = getMessageCollection();
-		
+
 		/* for all connected hosts collect all messages that have a higher
 		   probability of delivery by the other host */
 		for (Connection con : getConnections()) {
 			DTNHost other = con.getOtherNode(getHost());
 			mRouter2 othRouter = (mRouter2)other.getRouter();
-			
+
 			if (othRouter.isTransferring()) {
 				continue; // skip hosts that are transferring
 			}
 
 			for (Message m : msgCollection) {
+				DTNHost des = m.getTo();
+				double self_dp = getPredFor(des);
+				double oth_dp = othRouter.getPredFor(des);
 				if (othRouter.hasMessage(m.getId())) {
 					continue; // skip messages that the other one has
 				}
 
-				// DP value
-				if ( othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo()) && othRouter.getPredFor(m.getTo()) >= THRHES_DP  ) {
-					// the other node has higher probability of delivery
+				if( des==other ){
 					m.addRelayedNum();
+					m.setRelayType(0);
+					addToMessages(m,false);
 					messages.add(new Tuple<Message, Connection>(m,con));
-					++Statistics.PASS_BY_DP;
 				}
-				// Period information
-				else if ( othRouterHasBetterPeriod(other,othRouter,m)) {
-					m.addRelayedNum();
-					messages.add(new Tuple<Message, Connection>(m,con));
-					++Statistics.PASS_BY_PERIOD;
+				else {
+					int r1Hop = this.timeRemain1Hop(this,des);
+					int r1HopOth = othRouter.timeRemain1Hop(othRouter,des);
+					int r2Hop = this.timeRemain2Hop(des,m);
+					int r2HopOth = othRouter.timeRemain2Hop(des,m);
+					int ttl = m.getTtl()*60;
+
+					if( r1Hop==0 && r1HopOth==0 && oth_dp>self_dp  ){
+						m.addRelayedNum();
+						m.setRelayType(1);
+						addToMessages(m,false);
+						messages.add(new Tuple<Message, Connection>(m,con));
+					}
+					else if( (r1HopOth<r1Hop && r1HopOth<ttl) || (r2HopOth<ttl&&(r2HopOth<r1Hop || r2HopOth<r2Hop)) ){
+						m.addRelayedNum();
+						if( (r1HopOth<r1Hop && r1HopOth<ttl) )
+							m.setRelayType(2);
+						else
+							m.setRelayType(3);
+						addToMessages(m,false);
+						messages.add(new Tuple<Message, Connection>(m,con));
+					}
+					// Spreading ability
+					/*else if( r1Hop>ttl && self_dp<THRHES_DP && otherRouterCanCoverMoreNodes(other,othRouter,m)  ){
+						m.addRelayedNum();
+						m.setRelayType(3);
+						addToMessages(m,false);
+						messages.add(new Tuple<Message, Connection>(m,con));
+					}*/
+
 				}
-				// Spreading ability
-				else if ( otherRouterCanCoverMoreNodes(other,othRouter,m) ) {
-					m.addRelayedNum();
-					messages.add(new Tuple<Message, Connection>(m,con));
-					++Statistics.PASS_BY_CENTRALITY;
-				}
-			}			
+			}
 		}
-		
+
 		if (messages.size() == 0) {
 			return null;
 		}
-		
+
 		// sort the message-connection tuples
 		// Collections.sort(messages, new TupleComparator());
 		return tryMessagesForConnected(messages);	// try to send messages
@@ -698,14 +725,14 @@ public class mRouter2 extends ActiveRouter {
 
 	/**
 	 * Comparator for Message-Connection-Tuples that orders the tuples by
-	 * their delivery probability by the host on the other side of the 
+	 * their delivery probability by the host on the other side of the
 	 * connection (GRTRMax)
 	 */
-	private class TupleComparator implements Comparator 
-		<Tuple<Message, Connection>> {
+	private class TupleComparator implements Comparator
+			<Tuple<Message, Connection>> {
 
 		public int compare(Tuple<Message, Connection> tuple1,
-				Tuple<Message, Connection> tuple2) {
+						   Tuple<Message, Connection> tuple2) {
 			// delivery probability of tuple1's message with tuple1's connection
 			double p1 = ((mRouter2)tuple1.getValue().
 					getOtherNode(getHost()).getRouter()).getPredFor(
@@ -718,7 +745,7 @@ public class mRouter2 extends ActiveRouter {
 			// bigger probability should come first
 			if (p2-p1 == 0) {
 				/* equal probabilities -> let queue mode decide */
-				return compareByQueueMode(tuple1.getKey(), tuple2.getKey());
+				return 0;
 			}
 			else if (p2-p1 < 0) {
 				return -1;
@@ -728,26 +755,26 @@ public class mRouter2 extends ActiveRouter {
 			}
 		}
 	}
-	
+
 	@Override
 	public RoutingInfo getRoutingInfo() {
 		ageDeliveryPreds();
 		RoutingInfo top = super.getRoutingInfo();
-		RoutingInfo ri = new RoutingInfo(preds.size() + 
+		RoutingInfo ri = new RoutingInfo(preds.size() +
 				" delivery prediction(s)");
-		
+
 		for (Map.Entry<DTNHost, Double> e : preds.entrySet()) {
 			DTNHost host = e.getKey();
 			Double value = e.getValue();
-			
-			ri.addMoreInfo(new RoutingInfo(String.format("%s : %.6f", 
+
+			ri.addMoreInfo(new RoutingInfo(String.format("%s : %.6f",
 					host, value)));
 		}
-		
+
 		top.addMoreInfo(ri);
 		return top;
 	}
-	
+
 	@Override
 	public MessageRouter replicate() {
 		mRouter2 r = new mRouter2(this);
